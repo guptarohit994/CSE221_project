@@ -16,3 +16,7 @@ For macOS (Need Xcode and its Developer Tools installed),
 1. Open Xcode
 2. From top left, Xcode -> Open Developer Tool -> Instruments
 3. From top left again, Instruments -> Preferences -> CPUs
+
+**Intel® 64 and IA-32 Architectures Software Developer’s Manual**
+
+Useful for finding precisely about instructions and asm code. Refer - https://www.intel.com/content/dam/www/public/us/en/documents/manuals/64-ia-32-architectures-software-developer-instruction-set-reference-manual-325383.pdf
