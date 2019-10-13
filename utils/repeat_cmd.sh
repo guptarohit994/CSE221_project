@@ -18,7 +18,7 @@ then
 else
     if [ ! -f "$EXECUTABLE" ]
     then 
-        echo "Error! EXECUTABLE does not found!"
+        echo "Error! ${EXECUTABLE} not found!"
         exit 1
     fi
 fi
@@ -40,7 +40,7 @@ LOOP_COUNT=0
 for i in {1..100000}
 do
     LOOP_COUNT=`expr $LOOP_COUNT + 1`
-    TIME_TAKEN=`./$EXECUTABLE | grep -i cycles_taken: | cut -d : -f2`
+    TIME_TAKEN=`./$EXECUTABLE | grep -i "cycles_taken =" | rev | cut -d = -f1 | rev | cut -d ' ' -f2`
     printf "%d\t    \t%d\n" "$i" "${TIME_TAKEN}"
     SUM=$(echo "$TIME_TAKEN + $SUM" | bc)
     TIMES[$i]=$TIME_TAKEN
