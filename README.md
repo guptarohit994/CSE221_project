@@ -13,8 +13,14 @@ Remember to run as superuser if doing in a C program!
 **Use single core and disable hyperthreading**
 
 For macOS (Need Xcode and its Developer Tools installed), 
-1. Open Instruments app (Could search in spotlight)
+1. Open `Instruments` app (Could search in spotlight)
 3. From top left, Instruments -> Preferences -> CPUs
+
+**Disable TurboBoost**
+
+For macOS, I used this app - https://www.rugarciap.com/turbo-boost-switcher-for-os-x/
+<br>
+Just note that you should move the app to `Applications` folder and run it from there.
 
 **Intel® 64 and IA-32 Architectures Software Developer’s Manual**
 
