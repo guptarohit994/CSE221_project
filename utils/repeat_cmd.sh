@@ -29,7 +29,7 @@ then
     REPEAT_COUNT=10
 fi
 
-declare -a AVERAGE
+declare -a TIMES
 
 echo "Running ${EXECUTABLE} ${REPEAT_COUNT} times to get the average."
 
@@ -40,9 +40,10 @@ LOOP_COUNT=0
 for i in {1..100000}
 do
     LOOP_COUNT=`expr $LOOP_COUNT + 1`
-    TIME_TAKEN=`./$EXECUTABLE | grep -i cycles_taken | cut -d : -f2`
+    TIME_TAKEN=`./$EXECUTABLE | grep -i cycles_taken: | cut -d : -f2`
     printf "%d\t    \t%d\n" "$i" "${TIME_TAKEN}"
     SUM=$(echo "$TIME_TAKEN + $SUM" | bc)
+    TIMES[$i]=$TIME_TAKEN
 
     if [ $LOOP_COUNT -eq $REPEAT_COUNT ]
     then
@@ -50,6 +51,21 @@ do
     fi
 done
 
+median() {
+  #printf '%s ' "${@}"
+  arr=($(printf '%d\n' "${@}" | sort -n))
+  nel=${#arr[@]}
+  if (( $nel % 2 == 1 )); then     # Odd number of elements
+    val="${arr[ $(($nel/2)) ]}"
+  else                            # Even number of elements
+    (( j=nel/2 ))
+    (( k=j-1 ))
+    (( val=(${arr[j]} + ${arr[k]})/2 ))
+  fi
+  printf "Median:%.2f\n" "${val}"
+}
+
+median ${TIMES[@]}
 AVERAGE=$(echo "scale = 6; $SUM / $REPEAT_COUNT" | bc)
 printf "Average:%.2f\n" "${AVERAGE}"
 echo "==================================================================="
