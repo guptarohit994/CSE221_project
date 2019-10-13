@@ -13,9 +13,8 @@ Remember to run as superuser if doing in a C program!
 **Use single core and disable hyperthreading**
 
 For macOS (Need Xcode and its Developer Tools installed), 
-1. Open Xcode
-2. From top left, Xcode -> Open Developer Tool -> Instruments
-3. From top left again, Instruments -> Preferences -> CPUs
+1. Open Instruments app (Could search in spotlight)
+3. From top left, Instruments -> Preferences -> CPUs
 
 **Intel® 64 and IA-32 Architectures Software Developer’s Manual**
 
