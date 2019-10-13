@@ -3,20 +3,23 @@ OPTS=-Werror -O0
 #-g for default debug information
 #-Werror for warning as error
 
-all: build rdtsc context_switch_kthreads
+all: build measurement_overhead context_switch_kthreads context_switch_processes
 
 build: 
 	mkdir -p build
 
 ################### 1_cpu_scheduling_and_os_services ###################
 ## measurement_overhead
-rdtsc: build
-	$(CC) $(OPTS) -o build/rdtsc operations/1_cpu_scheduling_and_os_services/measurement_overhead/rdtsc.c
+measurement_overhead: build
+	$(CC) $(OPTS) -o build/measurement_overhead operations/1_cpu_scheduling_and_os_services/measurement_overhead/measurement_overhead.c
 
 
 ## context_switch_time
 context_switch_kthreads: build
 	$(CC) $(OPTS) -o build/context_switch_kthreads operations/1_cpu_scheduling_and_os_services/context_switch_time/context_switch_kthreads.c
+
+context_switch_processes: build
+	$(CC) $(OPTS) -o build/context_switch_processes operations/1_cpu_scheduling_and_os_services/context_switch_time/context_switch_processes.c
 
 ################### 2_memory ###################
 

@@ -1,8 +1,12 @@
-#include <stdio.h>
-#include <stdint.h>
+#include "../../../utils/utils.h"
 
 
 int main () {
+
+	cnprintf(LOW, "main", "\n\n");
+  	cnprintf(LOW, "main", "***************** MEASUREMENT_OVERHEAD *****************");
+  	set_nice(-20);
+
 	uint32_t cycles_high0, cycles_low0;
 	uint32_t cycles_high1, cycles_low1;
 	uint64_t cycles_before, cycles_after, cycles_taken;
@@ -26,11 +30,11 @@ int main () {
     cycles_before = ((uint64_t)cycles_high0 << 32) | cycles_low0;
     cycles_after = ((uint64_t)cycles_high1 << 32) | cycles_low1;
 
-    if (cycles_after >= cycles_before) {
-    	cycles_taken = cycles_after - cycles_before;
-    } else {
-    	printf("tsc has overflown!\n");
-    	cycles_taken = cycles_before - cycles_after;
-    }
-    printf("cycles_taken:%llu\n", cycles_taken);
+    assert(cycles_before <= cycles_after);
+
+    cycles_taken = cycles_after - cycles_before;
+
+    cnprintf(LOW, "main", "\n\n");
+    cnprintf(LOW, "main", "***************** RESULT *****************");
+    cnprintfsui64(LOW, "main", "(per iteration) cycles_taken", cycles_taken);
 }
