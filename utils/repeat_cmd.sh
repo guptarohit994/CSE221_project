@@ -9,6 +9,7 @@ EXECUTABLE=$1
 REPEAT_COUNT=$2
 
 PWD=`pwd`
+echo "Running command - ${0} ${1} ${2}"
 echo "Currently in $PWD"
 
 if [ -z "$EXECUTABLE" ]
@@ -31,7 +32,7 @@ fi
 
 declare -a TIMES
 
-echo "Running ${EXECUTABLE} ${REPEAT_COUNT} times to get the average."
+echo "Running ${EXECUTABLE} ${REPEAT_COUNT} times to get the median & average."
 
 echo "\nS.No.\t       \tAv time (in cycles)"
 echo "==================================================================="

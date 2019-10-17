@@ -1,6 +1,6 @@
 #include "../../../utils/utils.h"
 #include <pthread.h>
-#define NUM_ITERATIONS 10000
+#define NUM_ITERATIONS 100000
 
 struct Pipeinfo {
     int fd_to_read;

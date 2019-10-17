@@ -1,7 +1,7 @@
 #include "../../../utils/utils.h"
 #include <pthread.h>
 #include <sys/wait.h>
-#define NUM_ITERATIONS 10000
+#define NUM_ITERATIONS 100000
 
 struct Pipeinfo {
     int fd_to_read;
@@ -9,19 +9,20 @@ struct Pipeinfo {
 };
 
 
-void ping_pong_processes(struct Pipeinfo pipes, int num_iterations) {
+void ping_pong_processes(struct Pipeinfo pipes, int num_iterations, char buf_wr[2]) {
     int ret;
     int pid = getpid();
     cnprintfsisisi(LOW, "ping_pong_processes", "pid", pid, "starting ping_pong. readfd", pipes.fd_to_read, \
                                            "writefd", pipes.fd_to_write);
 
-    char buf;
+    char buf[2];
     for (int i = 0; i < num_iterations; i++) {
-      ret = read(pipes.fd_to_read, &buf, 1);
+      ret = read(pipes.fd_to_read, buf, 1);
       if (ret != 1)
           handle_error("process_pipe_read");
+      //printf("pid:%d, %c\n", pid, buf[0]);
 
-      ret = write(pipes.fd_to_write, "g", 1);
+      ret = write(pipes.fd_to_write, buf_wr, 1);
       if (ret != 1)
           handle_error("process_pipe_write");
     }
@@ -79,9 +80,13 @@ int main(int argc, char *argv[]) {
   if ((child_pid = fork()) == -1) {
       handle_error("fork");
   } else if (child_pid == 0) {
+      char buf_wr[2];
+      buf_wr[0] = 'c';
       //child
-      ping_pong_processes(child_pipes, NUM_ITERATIONS);
+      ping_pong_processes(child_pipes, NUM_ITERATIONS, buf_wr);
   } else {
+      char buf_wr[2];
+      buf_wr[0] = 'p';
       //parent
       write(parent_pipes.fd_to_write, "s", 1);
 
@@ -95,7 +100,7 @@ int main(int argc, char *argv[]) {
           : "=r" (cycles_high1), "=r" (cycles_low1)
           :: "%rax", "%rbx", "%rcx", "%rdx");
 
-      ping_pong_processes(parent_pipes, NUM_ITERATIONS);
+      ping_pong_processes(parent_pipes, NUM_ITERATIONS, buf_wr);
 
       // measure t3
       asm volatile ("rdtscp\n\t"
