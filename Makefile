@@ -3,15 +3,18 @@ OPTS=-Werror -O0
 #-g for default debug information
 #-Werror for warning as error
 
-all: build measurement_overhead creation_kthreads creation_processes context_switch_kthreads context_switch_processes
+all: build reading_time_overhead loop_overhead creation_kthreads creation_processes context_switch_kthreads context_switch_processes
 
 build: 
 	mkdir -p build
 
 ################### 1_cpu_scheduling_and_os_services ###################
 ## measurement_overhead
-measurement_overhead: build
-	$(CC) $(OPTS) -o build/measurement_overhead operations/1_cpu_scheduling_and_os_services/measurement_overhead/measurement_overhead.c
+reading_time_overhead: build
+	$(CC) $(OPTS) -o build/reading_time_overhead operations/1_cpu_scheduling_and_os_services/measurement_overhead/reading_time_overhead.c
+
+loop_overhead: build
+	$(CC) $(OPTS) -o build/loop_overhead operations/1_cpu_scheduling_and_os_services/measurement_overhead/loop_overhead.c
 
 ## task_creation
 creation_kthreads: build
