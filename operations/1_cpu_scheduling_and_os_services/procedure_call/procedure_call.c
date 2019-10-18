@@ -2,6 +2,7 @@
 #include "stdint.h"
 #include <inttypes.h>
 
+#define NUM_INTERATIONS 1000
 
 void call0()
 {
@@ -52,7 +53,9 @@ int main () {
 		  : "=r" (cycles_high0), "=r" (cycles_low0)
 		  :: "%rax", "%rbx", "%rcx", "%rdx");
 
-	call0();
+    for (int i = 0; i < NUM_INTERATIONS; ++i) {
+	   call0();
+    } 
 
     asm volatile ("rdtscp\n\t"
 		  "mov %%edx, %0\n\t"
@@ -67,6 +70,7 @@ int main () {
     assert(cycles_before <= cycles_after);
 
     cycles_taken = cycles_after - cycles_before;
+    cycles_taken /= NUM_INTERATIONS;
 
     cnprintf(LOW, "main", "\n\n");
     cnprintf(LOW, "main", "***************** RESULT 0*****************");
@@ -78,8 +82,9 @@ asm volatile ("cpuid\n\t"
 		  "mov %%eax, %1\n\t"
 		  : "=r" (cycles_high0), "=r" (cycles_low0)
 		  :: "%rax", "%rbx", "%rcx", "%rdx");
-
-	call1(1);
+    
+    for (int i = 0; i < NUM_INTERATIONS; ++i)
+	   call1(1);
 
     asm volatile ("rdtscp\n\t"
 		  "mov %%edx, %0\n\t"
@@ -94,6 +99,7 @@ asm volatile ("cpuid\n\t"
     assert(cycles_before <= cycles_after);
 
     cycles_taken = cycles_after - cycles_before;
+    cycles_taken /= NUM_INTERATIONS;
 
     cnprintf(LOW, "main", "\n\n");
     cnprintf(LOW, "main", "***************** RESULT 1*****************");
@@ -105,8 +111,9 @@ asm volatile ("cpuid\n\t"
 		  "mov %%eax, %1\n\t"
 		  : "=r" (cycles_high0), "=r" (cycles_low0)
 		  :: "%rax", "%rbx", "%rcx", "%rdx");
-
-	call2(1,2);
+    
+    for (int i = 0; i < NUM_INTERATIONS; ++i)
+	   call2(1,2);
 
     asm volatile ("rdtscp\n\t"
 		  "mov %%edx, %0\n\t"
@@ -121,6 +128,7 @@ asm volatile ("cpuid\n\t"
     assert(cycles_before <= cycles_after);
 
     cycles_taken = cycles_after - cycles_before;
+    cycles_taken /= NUM_INTERATIONS;
 
     cnprintf(LOW, "main", "\n\n");
     cnprintf(LOW, "main", "***************** RESULT 2*****************");
@@ -133,7 +141,7 @@ asm volatile ("cpuid\n\t"
 		  : "=r" (cycles_high0), "=r" (cycles_low0)
 		  :: "%rax", "%rbx", "%rcx", "%rdx");
 
-	call3(1,2,3);
+	for (int i = 0; i < NUM_INTERATIONS; ++i) call3(1,2,3);
 
     asm volatile ("rdtscp\n\t"
 		  "mov %%edx, %0\n\t"
@@ -148,6 +156,7 @@ asm volatile ("cpuid\n\t"
     assert(cycles_before <= cycles_after);
 
     cycles_taken = cycles_after - cycles_before;
+    cycles_taken /= NUM_INTERATIONS;
 
     cnprintf(LOW, "main", "\n\n");
     cnprintf(LOW, "main", "***************** RESULT 3*****************");
@@ -160,7 +169,7 @@ asm volatile ("cpuid\n\t"
 		  : "=r" (cycles_high0), "=r" (cycles_low0)
 		  :: "%rax", "%rbx", "%rcx", "%rdx");
 
-	call4(1,2,3,4);
+	for (int i = 0; i < NUM_INTERATIONS; ++i) call4(1,2,3,4);
 
     asm volatile ("rdtscp\n\t"
 		  "mov %%edx, %0\n\t"
@@ -175,6 +184,7 @@ asm volatile ("cpuid\n\t"
     assert(cycles_before <= cycles_after);
 
     cycles_taken = cycles_after - cycles_before;
+    cycles_taken /= NUM_INTERATIONS;
 
     cnprintf(LOW, "main", "\n\n");
     cnprintf(LOW, "main", "***************** RESULT 4*****************");
@@ -187,7 +197,7 @@ asm volatile ("cpuid\n\t"
 		  : "=r" (cycles_high0), "=r" (cycles_low0)
 		  :: "%rax", "%rbx", "%rcx", "%rdx");
 
-	call5(1,2,3,4,5);
+	for (int i = 0; i < NUM_INTERATIONS; ++i) call5(1,2,3,4,5);
 
     asm volatile ("rdtscp\n\t"
 		  "mov %%edx, %0\n\t"
@@ -202,6 +212,7 @@ asm volatile ("cpuid\n\t"
     assert(cycles_before <= cycles_after);
 
     cycles_taken = cycles_after - cycles_before;
+    cycles_taken /= NUM_INTERATIONS;
 
     cnprintf(LOW, "main", "\n\n");
     cnprintf(LOW, "main", "***************** RESULT 5*****************");
@@ -214,7 +225,7 @@ asm volatile ("cpuid\n\t"
 		  : "=r" (cycles_high0), "=r" (cycles_low0)
 		  :: "%rax", "%rbx", "%rcx", "%rdx");
 
-	call6(1,2,3,4,5,6);
+	for (int i = 0; i < NUM_INTERATIONS; ++i) call6(1,2,3,4,5,6);
 
     asm volatile ("rdtscp\n\t"
 		  "mov %%edx, %0\n\t"
@@ -229,6 +240,7 @@ asm volatile ("cpuid\n\t"
     assert(cycles_before <= cycles_after);
 
     cycles_taken = cycles_after - cycles_before;
+    cycles_taken /= NUM_INTERATIONS;
 
     cnprintf(LOW, "main", "\n\n");
     cnprintf(LOW, "main", "***************** RESULT 6*****************");
@@ -241,7 +253,7 @@ asm volatile ("cpuid\n\t"
 		  : "=r" (cycles_high0), "=r" (cycles_low0)
 		  :: "%rax", "%rbx", "%rcx", "%rdx");
 
-	call7(1,2,3,4,5,6,7);
+	for (int i = 0; i < NUM_INTERATIONS; ++i) call7(1,2,3,4,5,6,7);
 
     asm volatile ("rdtscp\n\t"
 		  "mov %%edx, %0\n\t"
@@ -256,6 +268,7 @@ asm volatile ("cpuid\n\t"
     assert(cycles_before <= cycles_after);
 
     cycles_taken = cycles_after - cycles_before;
+    cycles_taken /= NUM_INTERATIONS;
 
     cnprintf(LOW, "main", "\n\n");
     cnprintf(LOW, "main", "***************** RESULT 7*****************");
