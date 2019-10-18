@@ -1,5 +1,4 @@
 #include "../../../utils/utils.h"
-#include "utils.h"
 #include <pthread.h>
 #define NUM_ITERATIONS 100
 
