@@ -2,7 +2,9 @@
 #include "../../../utils/utils.h"
 #include <inttypes.h>
 
-#define NUM_INTERATIONS 1000
+#define NUM_ITERATIONS 100000
+
+struct Timer timer;
 
 void call0()
 {
@@ -42,236 +44,133 @@ int main () {
   	cnprintf(LOW, "main", "***************** PROCEDURE_CALL_OVERHEAD *****************");
   	set_nice(-20);
 
-	uint32_t cycles_high0, cycles_low0;
-	uint32_t cycles_high1, cycles_low1;
-	uint64_t cycles_before, cycles_after, cycles_taken;
+	uint64_t cycles_taken;
+	int i = 0;
 
-	asm volatile ("cpuid\n\t"
-		  "rdtsc\n\t"
-		  "mov %%edx, %0\n\t"
-		  "mov %%eax, %1\n\t"
-		  : "=r" (cycles_high0), "=r" (cycles_low0)
-		  :: "%rax", "%rbx", "%rcx", "%rdx");
+	tic(timer);
 
-    for (int i = 0; i < NUM_INTERATIONS; ++i) {
+    for (; i < NUM_ITERATIONS; ++i) {
 	   call0();
     } 
 
-    asm volatile ("rdtscp\n\t"
-		  "mov %%edx, %0\n\t"
-		  "mov %%eax, %1\n\t"
-		  "cpuid\n\t"
-		  : "=r" (cycles_high1), "=r" (cycles_low1)
-		  :: "%rax", "%rbx", "%rcx", "%rdx");
+    toc(timer);
 
-    cycles_before = ((uint64_t)cycles_high0 << 32) | cycles_low0;
-    cycles_after = ((uint64_t)cycles_high1 << 32) | cycles_low1;
-
-    assert(cycles_before <= cycles_after);
-
-    cycles_taken = cycles_after - cycles_before;
-    cycles_taken /= NUM_INTERATIONS;
+    cycles_taken = timer_diff(timer)/NUM_ITERATIONS;
 
     cnprintf(LOW, "main", "\n\n");
     cnprintf(LOW, "main", "***************** RESULT 0*****************");
-    printf("%" PRIu64 "\n", cycles_taken);
+    cnprintfsi(LOW, "main", "iterations", NUM_ITERATIONS);
+    cnprintfsui64(LOW, "main", "(per iteration) args:0 cycles_taken", cycles_taken );
 
-asm volatile ("cpuid\n\t"
-		  "rdtsc\n\t"
-		  "mov %%edx, %0\n\t"
-		  "mov %%eax, %1\n\t"
-		  : "=r" (cycles_high0), "=r" (cycles_low0)
-		  :: "%rax", "%rbx", "%rcx", "%rdx");
+    /* ******************************************************************************** */
+    i = 0;
+    tic(timer);
     
-    for (int i = 0; i < NUM_INTERATIONS; ++i)
+    for (; i < NUM_ITERATIONS; ++i)
 	   call1(1);
 
-    asm volatile ("rdtscp\n\t"
-		  "mov %%edx, %0\n\t"
-		  "mov %%eax, %1\n\t"
-		  "cpuid\n\t"
-		  : "=r" (cycles_high1), "=r" (cycles_low1)
-		  :: "%rax", "%rbx", "%rcx", "%rdx");
+    toc(timer);
 
-    cycles_before = ((uint64_t)cycles_high0 << 32) | cycles_low0;
-    cycles_after = ((uint64_t)cycles_high1 << 32) | cycles_low1;
-
-    assert(cycles_before <= cycles_after);
-
-    cycles_taken = cycles_after - cycles_before;
-    cycles_taken /= NUM_INTERATIONS;
+    cycles_taken = timer_diff(timer)/NUM_ITERATIONS;
 
     cnprintf(LOW, "main", "\n\n");
     cnprintf(LOW, "main", "***************** RESULT 1*****************");
-    printf("%" PRIu64 "\n", cycles_taken);
+    cnprintfsi(LOW, "main", "iterations", NUM_ITERATIONS);
+    cnprintfsui64(LOW, "main", "(per iteration) args:1 cycles_taken", cycles_taken );
 
-asm volatile ("cpuid\n\t"
-		  "rdtsc\n\t"
-		  "mov %%edx, %0\n\t"
-		  "mov %%eax, %1\n\t"
-		  : "=r" (cycles_high0), "=r" (cycles_low0)
-		  :: "%rax", "%rbx", "%rcx", "%rdx");
+    /* ******************************************************************************** */
+    i = 0;
+    tic(timer);
     
-    for (int i = 0; i < NUM_INTERATIONS; ++i)
+    for (; i < NUM_ITERATIONS; ++i)
 	   call2(1,2);
 
-    asm volatile ("rdtscp\n\t"
-		  "mov %%edx, %0\n\t"
-		  "mov %%eax, %1\n\t"
-		  "cpuid\n\t"
-		  : "=r" (cycles_high1), "=r" (cycles_low1)
-		  :: "%rax", "%rbx", "%rcx", "%rdx");
+    toc(timer);
 
-    cycles_before = ((uint64_t)cycles_high0 << 32) | cycles_low0;
-    cycles_after = ((uint64_t)cycles_high1 << 32) | cycles_low1;
-
-    assert(cycles_before <= cycles_after);
-
-    cycles_taken = cycles_after - cycles_before;
-    cycles_taken /= NUM_INTERATIONS;
+    cycles_taken = timer_diff(timer)/NUM_ITERATIONS;
 
     cnprintf(LOW, "main", "\n\n");
-    cnprintf(LOW, "main", "***************** RESULT 2*****************");
-    printf("%" PRIu64 "\n", cycles_taken);
+    cnprintf(LOW, "main", "***************** RESULT 2 *****************");
+    cnprintfsi(LOW, "main", "iterations", NUM_ITERATIONS);
+    cnprintfsui64(LOW, "main", "(per iteration) args:2 cycles_taken", cycles_taken );
 
-asm volatile ("cpuid\n\t"
-		  "rdtsc\n\t"
-		  "mov %%edx, %0\n\t"
-		  "mov %%eax, %1\n\t"
-		  : "=r" (cycles_high0), "=r" (cycles_low0)
-		  :: "%rax", "%rbx", "%rcx", "%rdx");
+    /* ******************************************************************************** */
+    i = 0;
+    tic(timer);
 
-	for (int i = 0; i < NUM_INTERATIONS; ++i) call3(1,2,3);
+	for (; i < NUM_ITERATIONS; ++i) call3(1,2,3);
 
-    asm volatile ("rdtscp\n\t"
-		  "mov %%edx, %0\n\t"
-		  "mov %%eax, %1\n\t"
-		  "cpuid\n\t"
-		  : "=r" (cycles_high1), "=r" (cycles_low1)
-		  :: "%rax", "%rbx", "%rcx", "%rdx");
+    toc(timer);
 
-    cycles_before = ((uint64_t)cycles_high0 << 32) | cycles_low0;
-    cycles_after = ((uint64_t)cycles_high1 << 32) | cycles_low1;
-
-    assert(cycles_before <= cycles_after);
-
-    cycles_taken = cycles_after - cycles_before;
-    cycles_taken /= NUM_INTERATIONS;
+    cycles_taken = timer_diff(timer)/NUM_ITERATIONS;
 
     cnprintf(LOW, "main", "\n\n");
-    cnprintf(LOW, "main", "***************** RESULT 3*****************");
-    printf("%" PRIu64 "\n", cycles_taken);
+    cnprintf(LOW, "main", "***************** RESULT 3 *****************");
+    cnprintfsi(LOW, "main", "iterations", NUM_ITERATIONS);
+    cnprintfsui64(LOW, "main", "(per iteration) args:3 cycles_taken", cycles_taken);
 
-asm volatile ("cpuid\n\t"
-		  "rdtsc\n\t"
-		  "mov %%edx, %0\n\t"
-		  "mov %%eax, %1\n\t"
-		  : "=r" (cycles_high0), "=r" (cycles_low0)
-		  :: "%rax", "%rbx", "%rcx", "%rdx");
+    /* ******************************************************************************** */
+    i = 0;
+    tic(timer);
 
-	for (int i = 0; i < NUM_INTERATIONS; ++i) call4(1,2,3,4);
+	for (; i < NUM_ITERATIONS; ++i)
+		call4(1,2,3,4);
 
-    asm volatile ("rdtscp\n\t"
-		  "mov %%edx, %0\n\t"
-		  "mov %%eax, %1\n\t"
-		  "cpuid\n\t"
-		  : "=r" (cycles_high1), "=r" (cycles_low1)
-		  :: "%rax", "%rbx", "%rcx", "%rdx");
+    toc(timer);
 
-    cycles_before = ((uint64_t)cycles_high0 << 32) | cycles_low0;
-    cycles_after = ((uint64_t)cycles_high1 << 32) | cycles_low1;
-
-    assert(cycles_before <= cycles_after);
-
-    cycles_taken = cycles_after - cycles_before;
-    cycles_taken /= NUM_INTERATIONS;
+    cycles_taken = timer_diff(timer)/NUM_ITERATIONS;
 
     cnprintf(LOW, "main", "\n\n");
-    cnprintf(LOW, "main", "***************** RESULT 4*****************");
-    printf("%" PRIu64 "\n", cycles_taken);
+    cnprintf(LOW, "main", "***************** RESULT 4 *****************");
+    cnprintfsi(LOW, "main", "iterations", NUM_ITERATIONS);
+    cnprintfsui64(LOW, "main", "(per iteration) args:4 cycles_taken", cycles_taken);
 
-asm volatile ("cpuid\n\t"
-		  "rdtsc\n\t"
-		  "mov %%edx, %0\n\t"
-		  "mov %%eax, %1\n\t"
-		  : "=r" (cycles_high0), "=r" (cycles_low0)
-		  :: "%rax", "%rbx", "%rcx", "%rdx");
+    /* ******************************************************************************** */
+    i = 0;
+    tic(timer);
 
-	for (int i = 0; i < NUM_INTERATIONS; ++i) call5(1,2,3,4,5);
+	for (; i < NUM_ITERATIONS; ++i)
+		call5(1,2,3,4,5);
 
-    asm volatile ("rdtscp\n\t"
-		  "mov %%edx, %0\n\t"
-		  "mov %%eax, %1\n\t"
-		  "cpuid\n\t"
-		  : "=r" (cycles_high1), "=r" (cycles_low1)
-		  :: "%rax", "%rbx", "%rcx", "%rdx");
+    toc(timer);
 
-    cycles_before = ((uint64_t)cycles_high0 << 32) | cycles_low0;
-    cycles_after = ((uint64_t)cycles_high1 << 32) | cycles_low1;
-
-    assert(cycles_before <= cycles_after);
-
-    cycles_taken = cycles_after - cycles_before;
-    cycles_taken /= NUM_INTERATIONS;
+    cycles_taken = timer_diff(timer)/NUM_ITERATIONS;
 
     cnprintf(LOW, "main", "\n\n");
-    cnprintf(LOW, "main", "***************** RESULT 5*****************");
-    printf("%" PRIu64 "\n", cycles_taken);
+    cnprintf(LOW, "main", "***************** RESULT 5 *****************");
+    cnprintfsi(LOW, "main", "iterations", NUM_ITERATIONS);
+    cnprintfsui64(LOW, "main", "(per iteration) args:5 cycles_taken", cycles_taken );
 
-asm volatile ("cpuid\n\t"
-		  "rdtsc\n\t"
-		  "mov %%edx, %0\n\t"
-		  "mov %%eax, %1\n\t"
-		  : "=r" (cycles_high0), "=r" (cycles_low0)
-		  :: "%rax", "%rbx", "%rcx", "%rdx");
+    /* ******************************************************************************** */
+    i = 0;
+    tic(timer);
 
-	for (int i = 0; i < NUM_INTERATIONS; ++i) call6(1,2,3,4,5,6);
+	for (; i < NUM_ITERATIONS; ++i)
+		call6(1,2,3,4,5,6);
 
-    asm volatile ("rdtscp\n\t"
-		  "mov %%edx, %0\n\t"
-		  "mov %%eax, %1\n\t"
-		  "cpuid\n\t"
-		  : "=r" (cycles_high1), "=r" (cycles_low1)
-		  :: "%rax", "%rbx", "%rcx", "%rdx");
+    toc(timer);
 
-    cycles_before = ((uint64_t)cycles_high0 << 32) | cycles_low0;
-    cycles_after = ((uint64_t)cycles_high1 << 32) | cycles_low1;
-
-    assert(cycles_before <= cycles_after);
-
-    cycles_taken = cycles_after - cycles_before;
-    cycles_taken /= NUM_INTERATIONS;
+    cycles_taken = timer_diff(timer)/NUM_ITERATIONS;
 
     cnprintf(LOW, "main", "\n\n");
-    cnprintf(LOW, "main", "***************** RESULT 6*****************");
-    printf("%" PRIu64 "\n", cycles_taken);
+    cnprintf(LOW, "main", "***************** RESULT 6 *****************");
+    cnprintfsi(LOW, "main", "iterations", NUM_ITERATIONS);
+    cnprintfsui64(LOW, "main", "(per iteration) args:6 cycles_taken", cycles_taken );
 
-asm volatile ("cpuid\n\t"
-		  "rdtsc\n\t"
-		  "mov %%edx, %0\n\t"
-		  "mov %%eax, %1\n\t"
-		  : "=r" (cycles_high0), "=r" (cycles_low0)
-		  :: "%rax", "%rbx", "%rcx", "%rdx");
+    /* ******************************************************************************** */
+    i = 0;
+    tic(timer);
 
-	for (int i = 0; i < NUM_INTERATIONS; ++i) call7(1,2,3,4,5,6,7);
+	for (; i < NUM_ITERATIONS; ++i) 
+		call7(1,2,3,4,5,6,7);
 
-    asm volatile ("rdtscp\n\t"
-		  "mov %%edx, %0\n\t"
-		  "mov %%eax, %1\n\t"
-		  "cpuid\n\t"
-		  : "=r" (cycles_high1), "=r" (cycles_low1)
-		  :: "%rax", "%rbx", "%rcx", "%rdx");
+    toc(timer);
 
-    cycles_before = ((uint64_t)cycles_high0 << 32) | cycles_low0;
-    cycles_after = ((uint64_t)cycles_high1 << 32) | cycles_low1;
-
-    assert(cycles_before <= cycles_after);
-
-    cycles_taken = cycles_after - cycles_before;
-    cycles_taken /= NUM_INTERATIONS;
+    cycles_taken = timer_diff(timer)/NUM_ITERATIONS;
 
     cnprintf(LOW, "main", "\n\n");
-    cnprintf(LOW, "main", "***************** RESULT 7*****************");
-    printf("%" PRIu64 "\n", cycles_taken);
-    //cnprintfsui64(LOW, "main", "(per iteration) cycles_taken", cycles_taken);
+    cnprintf(LOW, "main", "***************** RESULT 7 *****************");
+    cnprintfsi(LOW, "main", "iterations", NUM_ITERATIONS);
+    cnprintfsui64(LOW, "main", "(per iteration) args:7 cycles_taken", cycles_taken );
+
 }

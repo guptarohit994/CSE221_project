@@ -3,7 +3,7 @@ OPTS=-Werror -O0
 #-g for default debug information
 #-Werror for warning as error
 
-all: build reading_time_overhead loop_overhead creation_kthreads creation_processes context_switch_kthreads context_switch_processes
+all: build reading_time_overhead loop_overhead creation_kthreads creation_processes context_switch_kthreads context_switch_processes procedure_call system_call
 
 build: 
 	mkdir -p build

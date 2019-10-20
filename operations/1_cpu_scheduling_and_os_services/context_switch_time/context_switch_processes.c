@@ -37,12 +37,7 @@ int main(int argc, char *argv[]) {
   int s;
   int child_pid;
   int parent_pid;
-  uint32_t cycles_high1, cycles_low1;
-  uint32_t cycles_high2, cycles_low2;
-  uint32_t cycles_high3, cycles_low3;
-  uint64_t tsc_value_t1; /* tsc value before pthread_create */
-  uint64_t tsc_value_t2; /* tsc value after pthread_create in parent */
-  uint64_t tsc_value_t3; /* tsc value after pthread_create in child */
+  struct Timer timer;
   uint64_t cycles_taken;
 
   int p2c_pipefd [2]; /* 1 for parent, 0 for child */
@@ -92,23 +87,11 @@ int main(int argc, char *argv[]) {
 
       /* ***************** measurement starts now ***************** */
 
-      // measure t1
-      asm volatile ("cpuid\n\t"
-          "rdtsc\n\t"
-          "mov %%edx, %0\n\t"
-          "mov %%eax, %1\n\t"
-          : "=r" (cycles_high1), "=r" (cycles_low1)
-          :: "%rax", "%rbx", "%rcx", "%rdx");
+      tic(timer);
 
       ping_pong_processes(parent_pipes, NUM_ITERATIONS, buf_wr);
 
-      // measure t3
-      asm volatile ("rdtscp\n\t"
-          "mov %%edx, %0\n\t"
-          "mov %%eax, %1\n\t"
-          "cpuid\n\t"
-          : "=r" (cycles_high3), "=r" (cycles_low3)
-          :: "%rax", "%rbx", "%rcx", "%rdx");
+      toc(timer);
 
       /* ***************** measurement ends now ***************** */
       s = waitpid(child_pid, NULL, 0);
@@ -117,10 +100,8 @@ int main(int argc, char *argv[]) {
 
       cnprintfsi(MEDIUM, "main", "Joined with process", child_pid);
 
-      tsc_value_t1 = ((uint64_t)cycles_high1 << 32) | cycles_low1;
-      tsc_value_t3 = ((uint64_t)cycles_high3 << 32) | cycles_low3;
 
-      cycles_taken = (uint64_t) ((tsc_value_t3 - tsc_value_t1)/(2 * NUM_ITERATIONS));
+      cycles_taken = (uint64_t) (timer_diff(timer)/(2 * NUM_ITERATIONS));
 
       cnprintf(LOW, "main", "\n\n");
       cnprintf(LOW, "main", "***************** RESULT *****************");

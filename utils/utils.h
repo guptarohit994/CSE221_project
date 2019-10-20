@@ -11,6 +11,11 @@
 #include <assert.h>
 #include <sys/resource.h>
 
+// defines from measurement_overhead
+#define READING_TIME_OVERHEAD 32
+// per iteration
+#define LOOP_OVERHEAD 6
+
 //verbosity levels
 #define LOW 1
 #define MEDIUM 2

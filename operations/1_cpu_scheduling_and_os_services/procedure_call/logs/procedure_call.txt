@@ -1,0 +1,53 @@
+main: 
+
+
+main: ***************** PROCEDURE_CALL_OVERHEAD *****************
+set_nice: pid = 33694, old_priority = 0, new_priority = -20
+main: 
+
+
+main: ***************** RESULT 0*****************
+main: iterations = 100000
+main: (per iteration) args:0 cycles_taken = 6
+main: 
+
+
+main: ***************** RESULT 1*****************
+main: iterations = 100000
+main: (per iteration) args:1 cycles_taken = 6
+main: 
+
+
+main: ***************** RESULT 2 *****************
+main: iterations = 100000
+main: (per iteration) args:2 cycles_taken = 6
+main: 
+
+
+main: ***************** RESULT 3 *****************
+main: iterations = 100000
+main: (per iteration) args:3 cycles_taken = 7
+main: 
+
+
+main: ***************** RESULT 4 *****************
+main: iterations = 100000
+main: (per iteration) args:4 cycles_taken = 7
+main: 
+
+
+main: ***************** RESULT 5 *****************
+main: iterations = 100000
+main: (per iteration) args:5 cycles_taken = 8
+main: 
+
+
+main: ***************** RESULT 6 *****************
+main: iterations = 100000
+main: (per iteration) args:6 cycles_taken = 9
+main: 
+
+
+main: ***************** RESULT 7 *****************
+main: iterations = 100000
+main: (per iteration) args:7 cycles_taken = 12
