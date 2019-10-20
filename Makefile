@@ -28,6 +28,11 @@ creation_processes: build
 procedure_call: build
 	$(CC) $(OPTS) -o build/procedure_call operations/1_cpu_scheduling_and_os_services/procedure_call/procedure_call.c
 
+## system_call
+
+system_call: build
+	$(CC) $(OPTS) -o build/system_call operations/1_cpu_scheduling_and_os_services/system_call/system_call.c
+
 ## context_switch_time
 context_switch_kthreads: build
 	$(CC) $(OPTS) -o build/context_switch_kthreads operations/1_cpu_scheduling_and_os_services/context_switch_time/context_switch_kthreads.c
