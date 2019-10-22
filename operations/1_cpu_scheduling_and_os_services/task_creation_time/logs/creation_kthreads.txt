@@ -1,0 +1,29 @@
+Running command - utils/repeat_cmd.sh build/creation_kthreads 20
+Currently in /Users/gigaflower/Desktop/CSE221_project
+Running build/creation_kthreads 20 times to get the median & average.
+
+S.No.           Av time (in cycles)
+===================================================================
+1           315163
+2           326903
+3           325751
+4           327220
+5           331007
+6           327043
+7           327415
+8           332919
+9           332289
+10          330423
+11          325967
+12          326866
+13          332161
+14          326297
+15          324357
+16          391468
+17          338937
+18          336885
+19          325358
+20          327525
+Median:327317.00
+Average:331597.70
+===================================================================

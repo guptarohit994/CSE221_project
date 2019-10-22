@@ -1,0 +1,29 @@
+Running command - utils/repeat_cmd.sh build/creation_processes 20
+Currently in /Users/gigaflower/Desktop/CSE221_project
+Running build/creation_processes 20 times to get the median & average.
+
+S.No.           Av time (in cycles)
+===================================================================
+1           1604936
+2           1866864
+3           1594400
+4           1624074
+5           1667550
+6           1644148
+7           1677240
+8           1685077
+9           1624531
+10          1679394
+11          2437575
+12          1671884
+13          1674038
+14          1611662
+15          1636931
+16          1645833
+17          1714859
+18          1629484
+19          1628108
+20          1610481
+Median:1644990.00
+Average:1696453.45
+===================================================================

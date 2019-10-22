@@ -1,19 +1,15 @@
 #include "../../../utils/utils.h"
 #include <pthread.h>
 #include <sys/wait.h>
-#define NUM_ITERATIONS 100
-
-void * thread_start(void *arg) {
-    pthread_exit(0);
-}
+#define NUM_ITERATIONS 1000
 
 int main() {
     cnprintf(LOW, "main", "\n\n");
     cnprintf(LOW, "main", "***************** CREATION_PROCESSES *****************");
     set_nice(-20);
 
-    struct Timer timer;
     pid_t pid;
+    struct Timer timer;
 
     tic(timer);
 
