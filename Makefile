@@ -46,6 +46,9 @@ context_switch_processes: build
 ram_access_time: build
 	$(CC) $(OPTS) -o build/ram_access_time operations/2_memory/ram_access_time/ram_access_time.c
 
+ram_access_time_seq: build
+	$(CC) $(OPTS) -D SEQUENTIAL_ACCESS -o build/ram_access_time operations/2_memory/ram_access_time/ram_access_time.c
+
 ################### 3_network ###################
 
 ################### 4_file_system ###################
