@@ -3,7 +3,17 @@ OPTS=-Werror -O0
 #-g for default debug information
 #-Werror for warning as error
 
-all: build reading_time_overhead loop_overhead creation_kthreads creation_processes context_switch_kthreads context_switch_processes procedure_call system_call
+all: build \
+	 reading_time_overhead \
+	 loop_overhead \
+	 creation_kthreads \
+	 creation_processes \
+	 context_switch_kthreads \
+	 context_switch_processes \
+	 procedure_call \
+	 system_call \
+	 ram_access_time \
+	 ram_access_time_seq
 
 build: 
 	mkdir -p build
@@ -47,7 +57,7 @@ ram_access_time: build
 	$(CC) $(OPTS) -o build/ram_access_time operations/2_memory/ram_access_time/ram_access_time.c
 
 ram_access_time_seq: build
-	$(CC) $(OPTS) -D SEQUENTIAL_ACCESS -o build/ram_access_time operations/2_memory/ram_access_time/ram_access_time.c
+	$(CC) $(OPTS) -D SEQUENTIAL_ACCESS -o build/ram_access_time_seq operations/2_memory/ram_access_time/ram_access_time.c
 
 ################### 3_network ###################
 

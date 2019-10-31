@@ -68,7 +68,8 @@ void do_accesses(Node *n, size_t mem_size)
     prev_node = n;
     n = n->next; 
   } 
-  printf("total_linked_list_nodes:%zu/%zu, mem_size:%zuB, averageAccessTime:%0.2f cycles\n", count_nodes, (size_t)(mem_size / sizeof(Node)), mem_size, (double)total_access_time/count_nodes);
+  printf("total_linked_list_nodes:%zu/%zu, mem_size:%zuB, averageAccessTime:%0.2f cycles\n", 
+          count_nodes, (size_t)(mem_size / sizeof(Node)), mem_size, ((double)total_access_time/count_nodes) - READING_TIME_OVERHEAD);
 }
 
 /* this function creates a linked list either in sequential or non-sequential manner
