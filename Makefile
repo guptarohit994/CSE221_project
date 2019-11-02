@@ -13,7 +13,8 @@ all: build \
 	 procedure_call \
 	 system_call \
 	 ram_access_time \
-	 ram_access_time_seq
+	 ram_access_time_seq \
+	 round_trip_time
 
 build: 
 	mkdir -p build
@@ -52,7 +53,7 @@ context_switch_processes: build
 
 ################### 2_memory ###################
 
-## context_switch_time
+## ram_access_time
 ram_access_time: build
 	$(CC) $(OPTS) -o build/ram_access_time operations/2_memory/ram_access_time/ram_access_time.c
 
@@ -60,6 +61,12 @@ ram_access_time_seq: build
 	$(CC) $(OPTS) -D SEQUENTIAL_ACCESS -o build/ram_access_time_seq operations/2_memory/ram_access_time/ram_access_time.c
 
 ################### 3_network ###################
+
+## round_trip_time
+round_trip_time: build
+	$(info ************  Run following command to create a dummy remote server ************)
+	$(info ************  ncat -l 2000 --keep-open --exec "/bin/cat" ************)
+	$(CC) $(OPTS) -D SERVERADDR=\"127.0.0.1\" -D SERVERPORT=2000 -D DATABYTES=50 -o build/round_trip_time operations/3_network/round_trip_time/round_trip_time.c
 
 ################### 4_file_system ###################
 
