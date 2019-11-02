@@ -53,6 +53,10 @@ context_switch_processes: build
 
 ################### 2_memory ###################
 
+## cpuid_memory_info
+cpuid_memory_info: build
+	$(CC) $(OPTS) -o build/cpuid_memory_info operations/2_memory/cpuid_memory_info/cpuid_memory_info.c
+
 ## ram_access_time
 ram_access_time: build
 	$(CC) $(OPTS) -o build/ram_access_time operations/2_memory/ram_access_time/ram_access_time.c
