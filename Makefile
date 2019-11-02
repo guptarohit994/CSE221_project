@@ -66,7 +66,8 @@ ram_access_time_seq: build
 round_trip_time: build
 	$(info ************  Run following command to create a dummy remote server ************)
 	$(info ************  ncat -l 2000 --keep-open --exec "/bin/cat" ************)
-	$(CC) $(OPTS) -D SERVERADDR=\"127.0.0.1\" -D SERVERPORT=2000 -D DATABYTES=50 -o build/round_trip_time operations/3_network/round_trip_time/round_trip_time.c
+	# 56B since ping also sends 56 data bytes
+	$(CC) $(OPTS) -D SERVERADDR=\"127.0.0.1\" -D SERVERPORT=2000 -D DATABYTES=56 -o build/round_trip_time operations/3_network/round_trip_time/round_trip_time.c
 
 ################### 4_file_system ###################
 
