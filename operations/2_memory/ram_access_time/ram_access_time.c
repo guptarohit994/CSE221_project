@@ -129,12 +129,17 @@ Node * prepare_linked_list (size_t memory_region_size){
         repeat = 0;
       }
     }
+    array[previous_offset].next = &array[random_offset];
 
 #endif
 #ifdef SEQUENTIAL_ACCESS
     random_offset = i+1;
+    if (i == (num_nodes_possible - 1))
+      array[previous_offset].next = NULL;
+    else
+      array[previous_offset].next = &array[random_offset];
 #endif
-    array[previous_offset].next = &array[random_offset];
+    
     //printf("random_offset:%zu (%p), previous_offset:%zu (%p)\n", random_offset, array[previous_offset].next, previous_offset, &array[previous_offset]);
     
     previous_offset = random_offset;
