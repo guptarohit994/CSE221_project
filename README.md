@@ -26,7 +26,10 @@ Just note that you should move the app to `Applications` folder and run it from 
 
 Useful for finding precisely about instructions and asm code. Refer - https://www.intel.com/content/dam/www/public/us/en/documents/manuals/64-ia-32-architectures-software-developer-instruction-set-reference-manual-325383.pdf
 
-## procedure_call
+**create a dummy echo server using nmap's ncat tool**
 
-procedure_call: build
-	$(CC) $(OPTS) -o build/procedure_call operations/1_cpu_scheduling_and_os_services/procedure_call/procedure_call.c
+`ncat -l 2000 --keep-open --exec "/bin/cat"`
+
+**create a dummy server using nmap's ncat tool**
+
+`ncat -l 2000 --keep-open`
