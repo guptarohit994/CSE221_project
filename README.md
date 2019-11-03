@@ -33,3 +33,7 @@ Useful for finding precisely about instructions and asm code. Refer - https://ww
 **create a dummy server using nmap's ncat tool**
 
 `ncat -l 2000 --keep-open`
+
+**create a fake large file in MacOs**
+
+`mkfile -n 1g temp_1GB_file``
