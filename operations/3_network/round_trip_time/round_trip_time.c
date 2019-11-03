@@ -84,7 +84,7 @@ uint64_t setup_send_receive(int num_iterations) {
 	/* **************** **************** **************** time ends now **************** **************** **************** */
     toc(timer);
 
-    cycles_taken = (uint64_t) (timer_diff(timer)/(num_iterations));
+    cycles_taken = (uint64_t) (timer_diff(timer));
 
     return cycles_taken;
 }
@@ -92,12 +92,12 @@ uint64_t setup_send_receive(int num_iterations) {
 
 int main(){
 	cnprintf(LOW, "main", "\n\n");
-	uint64_t cycles_taken_per_iteration = setup_send_receive(NUM_ITERATIONS);
+	uint64_t cycles_taken_per_iteration = (uint64_t) (setup_send_receive(NUM_ITERATIONS)/(NUM_ITERATIONS));
 
 	// subtract overheads
     cycles_taken_per_iteration -= (READING_TIME_OVERHEAD + LOOP_OVERHEAD);
 
-    cnprintf(LOW, "main", "***************** RESULT *****************");
+    cnprintf(LOW, "main", "***************** RESULT: ROUND_TRIP_TIME *****************");
     cnprintfsi(LOW, "main", "iterations", NUM_ITERATIONS);
     cnprintfsui64(LOW, "main", "(per iteration) cycles_taken", cycles_taken_per_iteration);
 	

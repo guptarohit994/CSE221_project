@@ -14,7 +14,9 @@ all: build \
 	 system_call \
 	 ram_access_time \
 	 ram_access_time_seq \
-	 round_trip_time
+	 round_trip_time \
+	 connection_overhead_setup \
+	 connection_overhead_teardown
 
 build: 
 	mkdir -p build
@@ -68,10 +70,22 @@ ram_access_time_seq: build
 
 ## round_trip_time
 round_trip_time: build
-	$(info ************  Run following command to create a dummy remote server ************)
+	$(info ************  Run following command to create a dummy remote echo server ************)
 	$(info ************  ncat -l 2000 --keep-open --exec "/bin/cat" ************)
 	# 56B since ping also sends 56 data bytes
 	$(CC) $(OPTS) -D SERVERADDR=\"127.0.0.1\" -D SERVERPORT=2000 -D DATABYTES=56 -o build/round_trip_time operations/3_network/round_trip_time/round_trip_time.c
+
+## connection_overhead_setup
+connection_overhead_setup: build
+	$(info ************  Run following command to create a dummy remote server ************)
+	$(info ************  ncat -l 2000 --keep-open ************)
+	$(CC) $(OPTS) -D SERVERADDR=\"127.0.0.1\" -D SERVERPORT=2000 -o build/connection_overhead_setup operations/3_network/connection_overhead/connection_overhead_setup.c
+
+## connection_overhead_teardown
+connection_overhead_teardown: build
+	$(info ************  Run following command to create a dummy remote server ************)
+	$(info ************  ncat -l 2000 --keep-open ************)
+	$(CC) $(OPTS) -D SERVERADDR=\"127.0.0.1\" -D SERVERPORT=2000 -o build/connection_overhead_teardown operations/3_network/connection_overhead/connection_overhead_teardown.c
 
 ################### 4_file_system ###################
 
