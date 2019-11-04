@@ -15,6 +15,11 @@ typedef struct Node
 } Node;
 
 
+int compare (const void * a, const void * b) 
+{
+    return ( *(size_t*)a - *(size_t*)b );
+}
+
 // This function does accesses (read, read-write) to the contents of linked list starting from  
 // the given node 
 void do_accesses(Node *n, size_t mem_size) 
@@ -25,18 +30,20 @@ void do_accesses(Node *n, size_t mem_size)
   struct Timer timer;
   size_t access_time = 0;
   size_t total_access_time = 0;
+  size_t iteration = (size_t)(mem_size / sizeof(Node));
+  size_t access_times[iteration]; 
 
   while (n != NULL)
   { 
     count_nodes++;
-    size_t temp;
     int data_to_access = rand() % 24;
     asm (
       "mfence\n\t"        // memory fence
       :
       :
     );
-    //clock_gettime(CLOCK_REALTIME, &startAccess); //start clock
+    
+    /* **************** **************** **************** time starts now **************** **************** **************** */
     tic(timer);
     asm (
       "mov %0, %%al\n\t"  // load data
@@ -45,7 +52,7 @@ void do_accesses(Node *n, size_t mem_size)
     );
 
 
-    //clock_gettime(CLOCK_REALTIME, &endAccess); //end clock
+    /* **************** **************** **************** time ends now **************** **************** **************** */
     toc(timer);
 
     asm (
@@ -54,10 +61,9 @@ void do_accesses(Node *n, size_t mem_size)
       :
     );
     access_time = (uint64_t) (timer_diff(timer));
+    access_times[count_nodes - 1] = access_time;
     total_access_time += access_time;
-    //AccessTime = ((endAccess.tv_sec - startAccess.tv_sec) * SECONDS_PER_NS) + (endAccess.tv_nsec - startAccess.tv_nsec);
-    //totalAccessTime += AccessTime;
-    //printf("Thread:%d# data[%d]:0x%X, n:0x%X, AccessTime:%0.2f ns\n", tid, data_to_access,n->data[data_to_access], n, AccessTime);
+    
     if (prev_node > n){
         stride = prev_node - n;
     }else{
@@ -68,8 +74,9 @@ void do_accesses(Node *n, size_t mem_size)
     prev_node = n;
     n = n->next; 
   } 
-  printf("total_linked_list_nodes:%zu/%zu, mem_size:%zuB, averageAccessTime:%0.2f cycles\n", 
-          count_nodes, (size_t)(mem_size / sizeof(Node)), mem_size, ((double)total_access_time/count_nodes) - READING_TIME_OVERHEAD);
+  qsort (access_times, iteration, sizeof(size_t), compare);
+  printf("total_linked_list_nodes:%zu/%zu, mem_size:%zuB, averageAccessTime:%0.2f cycles, median:%zu cycles\n", 
+          count_nodes, iteration, mem_size, ((double)total_access_time/count_nodes) - READING_TIME_OVERHEAD, access_times[iteration/2] - READING_TIME_OVERHEAD);
 }
 
 /* this function creates a linked list either in sequential or non-sequential manner
@@ -84,12 +91,10 @@ Node * prepare_linked_list (size_t memory_region_size){
   array = (Node*) malloc(sizeof(Node) * num_nodes_possible);
   memset(array, 0x00, memory_region_size);
 
-  if( array == NULL ){
-      printf("malloc failed!\n");
-      exit(1);
-  }else{
-    //printf("malloc gave %p\n", array);
-  }
+  if( array == NULL )
+      handle_error("malloc_failed");
+  // else
+  //   printf("malloc gave %p\n", array);
 
   size_t i;
   for (i=0; i<num_nodes_possible; i++){
@@ -164,19 +169,14 @@ int main(int argc, char **argv) {
       1<<10,  2<<10,  3<<10,  4<<10,  5<<10,  6<<10,  7<<10,  8<<10,  9<<10,
      10<<10, 11<<10, 12<<10, 13<<10, 14<<10, 15<<10, 16<<10, 17<<10, 18<<10,
      19<<10, 20<<10, 21<<10, 22<<10, 23<<10, 24<<10, 25<<10, 26<<10, 27<<10,
-     28<<10, 29<<10, 30<<10, 31<<10, 32<<10, 33<<10, 34<<10, 35<<10, 36<<10,
-     37<<10, 38<<10, 39<<10, 40<<10, 41<<10, 42<<10, 43<<10, 44<<10, 48<<10,
-     64<<10, 80<<10, 96<<10,112<<10,128<<10,144<<10,160<<10,176<<10,192<<10,
-    208<<10,224<<10,240<<10,256<<10,272<<10,288<<10,304<<10,320<<10,336<<10,
-    352<<10,368<<10,384<<10,400<<10,416<<10,432<<10,448<<10,464<<10,480<<10,
-    496<<10,512<<10,  1<<20,  2<<20,  3<<20,  4<<20,  5<<20,  6<<20,  7<<20,  
-      8<<20,  9<<20, 10<<20, 11<<20, 12<<20, 13<<20, 14<<20, 15<<20, 16<<20,
-     17<<20, 18<<20, 19<<20, 20<<20, 21<<20, 22<<20, 23<<20, 24<<20, 25<<20,
-     26<<20, 27<<20, 28<<20, 29<<20, 30<<20, 31<<20, 32<<20, 64<<20,
-     128<<20,256<<20,512<<20,1024<<20,
+     28<<10, 29<<10, 30<<10, 31<<10, 32<<10, 48<<10, 64<<10, 80<<10, 96<<10,
+    112<<10,128<<10,192<<10,256<<10,320<<10,384<<10,448<<10,512<<10,  1<<20,
+      2<<20,  3<<20,  4<<20,  5<<20,  6<<20,  7<<20,  8<<20,  9<<20, 10<<20,
+     11<<20, 12<<20, 13<<20, 14<<20, 15<<20, 16<<20, 17<<20, 18<<20, 19<<20,
+     20<<20, 21<<20, 22<<20, 23<<20, 24<<20, 25<<20,
     };
   int l;
-  for (l=0; l<107; l++){
+  for (l=0; l<(sizeof(temp_size)/sizeof(size_t)); l++){
     //printf("-----------------------------------------------------------------\n");
     //printf("l:%d\n",l);
     mem_size = temp_size[l];
@@ -201,7 +201,7 @@ int main(int argc, char **argv) {
 
     do_accesses(array, mem_size);
 
-    //printf("Main_thread: hello, successfully completed for mem_size:%zuK\n", mem_size>>10);
+    //printf("Main_thread: successfully completed for mem_size:%zuK\n", mem_size>>10);
     //printf("-----------------------------------------------------------------\n");
     free(array);
   }

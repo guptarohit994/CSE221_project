@@ -12,11 +12,14 @@ all: build \
 	 context_switch_processes \
 	 procedure_call \
 	 system_call \
+	 cpuid_memory_info \
 	 ram_access_time \
 	 ram_access_time_seq \
 	 round_trip_time \
 	 connection_overhead_setup \
-	 connection_overhead_teardown
+	 connection_overhead_teardown \
+	 file_read_time \
+	 file_read_time_seq
 
 build: 
 	mkdir -p build
