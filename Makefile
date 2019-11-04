@@ -89,5 +89,15 @@ connection_overhead_teardown: build
 
 ################### 4_file_system ###################
 
+## file_read_time / remote_file_read_time
+file_read_time: build
+	cp operations/4_file_system/file_read_time/file_read_time_sizes.sh build/file_read_time_sizes.sh
+	$(CC) $(OPTS) -o build/file_read_time operations/4_file_system/file_read_time/file_read_time.c
+
+## file_read_time_seq / remote_file_read_time_seq
+file_read_time_seq: build
+	cp operations/4_file_system/file_read_time/file_read_time_sizes.sh build/file_read_time_sizes.sh
+	$(CC) $(OPTS) -D SEQUENTIAL_ACCESS -o build/file_read_time_seq operations/4_file_system/file_read_time/file_read_time.c
+
 clean:
 	rm -f build/*;

@@ -22,6 +22,12 @@
 #define FULL 3
 #define CVERBOSE LOW
 
+//quick memory denominations
+#define KB 1024ULL
+#define MB 1024ULL*1024ULL
+#define GB 1024ULL*1024ULL*1024ULL
+#define BLOCKSIZE 4ULL*KB
+
 // string1 = int1, string2 = int2, string3 = int3\n
 #define cnprintfsisisi(lvl,caller,str1,int1,str2,int2,str3,int3) \
 		((CVERBOSE>=lvl) ? fprintf(stdout, "%s: %s = %d, %s = %d, %s = %d\n",caller,str1,int1,str2,int2,str3,int3) : 0);
