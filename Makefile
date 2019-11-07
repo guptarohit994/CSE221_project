@@ -3,6 +3,15 @@ OPTS=-Werror -O0
 #-g for default debug information
 #-Werror for warning as error
 
+define standard_compile
+	$(CC) $(OPTS) -o build/$2 operations/$1/$2/$2.c
+endef
+# standard_compile Usage:
+# e.g. $(eval $(call standard_compile,dir,foo))
+# is equivalent to
+# foo: build
+# 	$(CC) $(OPTS) -o build/foo operations/dir/foo/foo.c
+
 all: build \
 	 reading_time_overhead \
 	 loop_overhead \
@@ -15,6 +24,7 @@ all: build \
 	 cpuid_memory_info \
 	 ram_access_time \
 	 ram_access_time_seq \
+	 page_fault_time \
 	 round_trip_time \
 	 connection_overhead_setup \
 	 connection_overhead_teardown \
@@ -68,6 +78,13 @@ ram_access_time: build
 
 ram_access_time_seq: build
 	$(CC) $(OPTS) -D SEQUENTIAL_ACCESS -o build/ram_access_time_seq operations/2_memory/ram_access_time/ram_access_time.c
+
+build/temp_1GB_file: build
+	$(info ************ A fake large file temp_1GB_file will be created ************)
+	mkfile -n 1g build/temp_1GB_file
+
+page_fault_time: build build/temp_1GB_file
+	$(call standard_compile,2_memory,page_fault_time)
 
 ################### 3_network ###################
 
