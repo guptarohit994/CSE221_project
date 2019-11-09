@@ -1,0 +1,111 @@
+[Frodo:cse_221/project/CSE221_project] rohitgupta% ping 100.83.5.241
+PING 100.83.5.241 (100.83.5.241): 56 data bytes
+64 bytes from 100.83.5.241: icmp_seq=0 ttl=63 time=76.823 ms
+64 bytes from 100.83.5.241: icmp_seq=1 ttl=63 time=52.400 ms
+64 bytes from 100.83.5.241: icmp_seq=2 ttl=63 time=3.402 ms
+64 bytes from 100.83.5.241: icmp_seq=3 ttl=63 time=6.943 ms
+64 bytes from 100.83.5.241: icmp_seq=4 ttl=63 time=4.919 ms
+64 bytes from 100.83.5.241: icmp_seq=5 ttl=63 time=75.680 ms
+64 bytes from 100.83.5.241: icmp_seq=6 ttl=63 time=92.664 ms
+64 bytes from 100.83.5.241: icmp_seq=7 ttl=63 time=6.209 ms
+64 bytes from 100.83.5.241: icmp_seq=8 ttl=63 time=7.088 ms
+64 bytes from 100.83.5.241: icmp_seq=9 ttl=63 time=7.178 ms
+64 bytes from 100.83.5.241: icmp_seq=10 ttl=63 time=4.344 ms
+64 bytes from 100.83.5.241: icmp_seq=11 ttl=63 time=8.246 ms
+64 bytes from 100.83.5.241: icmp_seq=12 ttl=63 time=23.977 ms
+64 bytes from 100.83.5.241: icmp_seq=13 ttl=63 time=47.743 ms
+64 bytes from 100.83.5.241: icmp_seq=14 ttl=63 time=9.613 ms
+64 bytes from 100.83.5.241: icmp_seq=15 ttl=63 time=5.684 ms
+64 bytes from 100.83.5.241: icmp_seq=16 ttl=63 time=20.746 ms
+64 bytes from 100.83.5.241: icmp_seq=17 ttl=63 time=7.518 ms
+64 bytes from 100.83.5.241: icmp_seq=18 ttl=63 time=4.353 ms
+64 bytes from 100.83.5.241: icmp_seq=19 ttl=63 time=21.203 ms
+64 bytes from 100.83.5.241: icmp_seq=20 ttl=63 time=9.001 ms
+64 bytes from 100.83.5.241: icmp_seq=21 ttl=63 time=17.567 ms
+64 bytes from 100.83.5.241: icmp_seq=22 ttl=63 time=10.860 ms
+64 bytes from 100.83.5.241: icmp_seq=23 ttl=63 time=6.868 ms
+64 bytes from 100.83.5.241: icmp_seq=24 ttl=63 time=9.538 ms
+64 bytes from 100.83.5.241: icmp_seq=25 ttl=63 time=4.262 ms
+64 bytes from 100.83.5.241: icmp_seq=26 ttl=63 time=15.445 ms
+64 bytes from 100.83.5.241: icmp_seq=27 ttl=63 time=14.683 ms
+64 bytes from 100.83.5.241: icmp_seq=28 ttl=63 time=7.295 ms
+64 bytes from 100.83.5.241: icmp_seq=29 ttl=63 time=7.415 ms
+64 bytes from 100.83.5.241: icmp_seq=30 ttl=63 time=7.598 ms
+Request timeout for icmp_seq 31
+64 bytes from 100.83.5.241: icmp_seq=32 ttl=63 time=34.916 ms
+64 bytes from 100.83.5.241: icmp_seq=33 ttl=63 time=85.665 ms
+64 bytes from 100.83.5.241: icmp_seq=34 ttl=63 time=5.605 ms
+64 bytes from 100.83.5.241: icmp_seq=35 ttl=63 time=27.968 ms
+64 bytes from 100.83.5.241: icmp_seq=36 ttl=63 time=8.267 ms
+64 bytes from 100.83.5.241: icmp_seq=37 ttl=63 time=8.368 ms
+64 bytes from 100.83.5.241: icmp_seq=38 ttl=63 time=18.410 ms
+64 bytes from 100.83.5.241: icmp_seq=39 ttl=63 time=9.411 ms
+64 bytes from 100.83.5.241: icmp_seq=40 ttl=63 time=4.992 ms
+64 bytes from 100.83.5.241: icmp_seq=41 ttl=63 time=6.178 ms
+64 bytes from 100.83.5.241: icmp_seq=42 ttl=63 time=38.264 ms
+64 bytes from 100.83.5.241: icmp_seq=43 ttl=63 time=8.361 ms
+64 bytes from 100.83.5.241: icmp_seq=44 ttl=63 time=10.867 ms
+64 bytes from 100.83.5.241: icmp_seq=45 ttl=63 time=48.435 ms
+64 bytes from 100.83.5.241: icmp_seq=46 ttl=63 time=5.455 ms
+64 bytes from 100.83.5.241: icmp_seq=47 ttl=63 time=9.797 ms
+64 bytes from 100.83.5.241: icmp_seq=48 ttl=63 time=5.747 ms
+64 bytes from 100.83.5.241: icmp_seq=49 ttl=63 time=3.427 ms
+64 bytes from 100.83.5.241: icmp_seq=50 ttl=63 time=6.851 ms
+64 bytes from 100.83.5.241: icmp_seq=51 ttl=63 time=7.542 ms
+64 bytes from 100.83.5.241: icmp_seq=52 ttl=63 time=6.970 ms
+64 bytes from 100.83.5.241: icmp_seq=53 ttl=63 time=6.813 ms
+64 bytes from 100.83.5.241: icmp_seq=54 ttl=63 time=17.891 ms
+64 bytes from 100.83.5.241: icmp_seq=55 ttl=63 time=77.568 ms
+64 bytes from 100.83.5.241: icmp_seq=56 ttl=63 time=5.947 ms
+64 bytes from 100.83.5.241: icmp_seq=57 ttl=63 time=4.124 ms
+64 bytes from 100.83.5.241: icmp_seq=58 ttl=63 time=30.160 ms
+64 bytes from 100.83.5.241: icmp_seq=59 ttl=63 time=6.107 ms
+64 bytes from 100.83.5.241: icmp_seq=60 ttl=63 time=37.714 ms
+64 bytes from 100.83.5.241: icmp_seq=61 ttl=63 time=9.362 ms
+64 bytes from 100.83.5.241: icmp_seq=62 ttl=63 time=5.929 ms
+64 bytes from 100.83.5.241: icmp_seq=63 ttl=63 time=4.239 ms
+64 bytes from 100.83.5.241: icmp_seq=64 ttl=63 time=6.969 ms
+64 bytes from 100.83.5.241: icmp_seq=65 ttl=63 time=6.232 ms
+64 bytes from 100.83.5.241: icmp_seq=66 ttl=63 time=143.231 ms
+64 bytes from 100.83.5.241: icmp_seq=67 ttl=63 time=3.582 ms
+64 bytes from 100.83.5.241: icmp_seq=68 ttl=63 time=47.874 ms
+64 bytes from 100.83.5.241: icmp_seq=69 ttl=63 time=8.669 ms
+64 bytes from 100.83.5.241: icmp_seq=70 ttl=63 time=11.756 ms
+64 bytes from 100.83.5.241: icmp_seq=71 ttl=63 time=14.620 ms
+64 bytes from 100.83.5.241: icmp_seq=72 ttl=63 time=9.068 ms
+64 bytes from 100.83.5.241: icmp_seq=73 ttl=63 time=43.155 ms
+64 bytes from 100.83.5.241: icmp_seq=74 ttl=63 time=66.809 ms
+64 bytes from 100.83.5.241: icmp_seq=75 ttl=63 time=48.902 ms
+64 bytes from 100.83.5.241: icmp_seq=76 ttl=63 time=12.580 ms
+64 bytes from 100.83.5.241: icmp_seq=77 ttl=63 time=12.590 ms
+64 bytes from 100.83.5.241: icmp_seq=78 ttl=63 time=71.588 ms
+64 bytes from 100.83.5.241: icmp_seq=79 ttl=63 time=92.763 ms
+64 bytes from 100.83.5.241: icmp_seq=80 ttl=63 time=25.317 ms
+64 bytes from 100.83.5.241: icmp_seq=81 ttl=63 time=24.937 ms
+64 bytes from 100.83.5.241: icmp_seq=82 ttl=63 time=53.364 ms
+64 bytes from 100.83.5.241: icmp_seq=83 ttl=63 time=5.698 ms
+64 bytes from 100.83.5.241: icmp_seq=84 ttl=63 time=5.821 ms
+64 bytes from 100.83.5.241: icmp_seq=85 ttl=63 time=8.299 ms
+64 bytes from 100.83.5.241: icmp_seq=86 ttl=63 time=7.614 ms
+64 bytes from 100.83.5.241: icmp_seq=87 ttl=63 time=6.465 ms
+64 bytes from 100.83.5.241: icmp_seq=88 ttl=63 time=3.798 ms
+64 bytes from 100.83.5.241: icmp_seq=89 ttl=63 time=4.565 ms
+64 bytes from 100.83.5.241: icmp_seq=90 ttl=63 time=34.993 ms
+64 bytes from 100.83.5.241: icmp_seq=91 ttl=63 time=52.153 ms
+64 bytes from 100.83.5.241: icmp_seq=92 ttl=63 time=7.371 ms
+64 bytes from 100.83.5.241: icmp_seq=93 ttl=63 time=91.404 ms
+64 bytes from 100.83.5.241: icmp_seq=94 ttl=63 time=3.935 ms
+64 bytes from 100.83.5.241: icmp_seq=95 ttl=63 time=8.130 ms
+64 bytes from 100.83.5.241: icmp_seq=96 ttl=63 time=27.551 ms
+64 bytes from 100.83.5.241: icmp_seq=97 ttl=63 time=5.089 ms
+64 bytes from 100.83.5.241: icmp_seq=98 ttl=63 time=100.289 ms
+64 bytes from 100.83.5.241: icmp_seq=99 ttl=63 time=24.460 ms
+64 bytes from 100.83.5.241: icmp_seq=100 ttl=63 time=20.302 ms
+^C
+--- 100.83.5.241 ping statistics ---
+101 packets transmitted, 100 packets received, 1.0% packet loss
+round-trip min/avg/max/stddev = 3.402/22.556/143.231/27.267 ms
+
+
+manual calculation:
+median = 8.899 ms
