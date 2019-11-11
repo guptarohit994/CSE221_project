@@ -20,7 +20,7 @@ uint64_t setup_send_receive(int num_iterations) {
 
     // timer to measure time
     struct Timer timer;
-    uint64_t cycles_taken;
+    uint64_t cycles_taken = 0;
 
 	// use socket address internet style to describe passive participant
 	struct sockaddr_in server_addr;
@@ -37,8 +37,7 @@ uint64_t setup_send_receive(int num_iterations) {
     msg_len = strlen(msg);
 
 
-    /* **************** **************** **************** time starts now **************** **************** **************** */
-    tic(timer);
+    
 
     for (int i = 0; i < num_iterations; i++) {
 		/* **************** create a stream socket for internet using TCP protocol **************** */
@@ -54,6 +53,9 @@ uint64_t setup_send_receive(int num_iterations) {
 			handle_error_en(status, "connect");
 		// else
 		// 	printf("connected to %s at port %d\n", SERVERADDR, SERVERPORT);
+
+		/* **************** **************** **************** time starts now **************** **************** **************** */
+    	tic(timer);
 
 		/* **************** send the msg to server **************** */
 	    // status is actually count of bytes sent!
@@ -72,6 +74,10 @@ uint64_t setup_send_receive(int num_iterations) {
 	    // else
 	    // 	printf("Received %d bytes\n", status);
 
+	    /* **************** **************** **************** time ends now **************** **************** **************** */
+    	toc(timer);
+
+    	cycles_taken += (uint64_t) (timer_diff(timer));
 	    //printf("%s\n", buf);
 
 		/* **************** close the socket **************** */
@@ -81,10 +87,9 @@ uint64_t setup_send_receive(int num_iterations) {
 		// printf("Socket closed!\n");
 	}
 
-	/* **************** **************** **************** time ends now **************** **************** **************** */
-    toc(timer);
+	
 
-    cycles_taken = (uint64_t) (timer_diff(timer));
+    
 
     return cycles_taken;
 }
@@ -95,7 +100,7 @@ int main(){
 	uint64_t cycles_taken_per_iteration = (uint64_t) (setup_send_receive(NUM_ITERATIONS)/(NUM_ITERATIONS));
 
 	// subtract overheads
-    cycles_taken_per_iteration -= (READING_TIME_OVERHEAD + LOOP_OVERHEAD);
+    cycles_taken_per_iteration -= (READING_TIME_OVERHEAD);
 
     cnprintf(LOW, "main", "***************** RESULT: ROUND_TRIP_TIME *****************");
     cnprintfsi(LOW, "main", "iterations", NUM_ITERATIONS);

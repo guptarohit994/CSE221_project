@@ -161,6 +161,14 @@ int main(int argc, char *argv[]) {
 	// else
 	// 	printf("Opened filename:%s for reading with fd:%d\n", filename, file_fd);
 
+	status = fcntl(file_fd, F_NOCACHE, 1);
+	if (status < 0)
+		handle_error_en(status, "fcntl_f_nocache");
+
+	status = fcntl(file_fd, F_RDAHEAD, 0);
+	if (status < 0)
+		handle_error_en(status, "fcntl_f_rdahead");
+
 	/* determine the size of filename */
 	uint64_t file_size_auto = lseek(file_fd, 0L, SEEK_END);
 	// file_size_auto is less than claimed

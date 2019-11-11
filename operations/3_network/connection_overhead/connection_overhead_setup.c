@@ -30,8 +30,7 @@ uint64_t setup_connection(int num_iterations) {
     	// timer to measure time
 		struct Timer timer;
 		
-		/* **************** **************** **************** time starts now **************** **************** **************** */
-		tic(timer);
+		
 
 		/* **************** create a stream socket for internet using TCP protocol **************** */
 		sockfd = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
@@ -39,6 +38,9 @@ uint64_t setup_connection(int num_iterations) {
 			handle_error_en(sockfd, "socket");
 		// else
 		// 	printf("Got sockfd:%d\n", sockfd);
+
+		/* **************** **************** **************** time starts now **************** **************** **************** */
+		tic(timer);
 
 		/* **************** connect to the server **************** */
 		status = connect(sockfd, (struct sockaddr*) &server_addr, sizeof(server_addr));
@@ -63,6 +65,7 @@ uint64_t setup_connection(int num_iterations) {
 
 
 int main(){
+	set_nice(-20);
 	cnprintf(LOW, "main", "\n\n");
 	uint64_t cycles_taken_per_iteration = (uint64_t) (setup_connection(NUM_ITERATIONS)/(NUM_ITERATIONS));
 
