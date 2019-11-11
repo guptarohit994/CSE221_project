@@ -26,6 +26,7 @@ all: build \
 	 ram_access_time_seq \
 	 page_fault_time \
 	 round_trip_time \
+	 peak_bandwidth \
 	 connection_overhead_setup \
 	 connection_overhead_teardown \
 	 file_read_time \
@@ -94,6 +95,12 @@ round_trip_time: build
 	$(info ************  ncat -l 2000 --keep-open --exec "/bin/cat" ************)
 	# 56B since ping also sends 56 data bytes
 	$(CC) $(OPTS) -D SERVERADDR=\"127.0.0.1\" -D SERVERPORT=2000 -D DATABYTES=56 -o build/round_trip_time operations/3_network/round_trip_time/round_trip_time.c
+
+## peak_bandwidth
+peak_bandwidth: build
+	$(info ************  Run two instance of the program as the client and server respectively ************)
+	$(info ************  build/peak_bandwidth -s & build/peak_bandwidth  ************)
+	$(CC) $(OPTS) -D SERVERADDR=\"127.0.0.1\" -D SERVERPORT=2000 -o build/peak_bandwidth operations/3_network/peak_bandwidth/peak_bandwidth.c
 
 ## connection_overhead_setup
 connection_overhead_setup: build

@@ -1,0 +1,21 @@
+Running command - ./utils/repeat_cmd.sh ./build/peak_bandwidth 10
+Currently in /Users/gigaflower/Desktop/CSE221_project
+Running ./build/peak_bandwidth 10 times to get the median & average.
+
+S.No.           Av time (in cycles)
+===================================================================
+1           1034510
+2           1040275
+3           1527036
+4           1097532
+5           1317056
+6           1325881
+7           1264059
+8           1150925
+9           1235618
+10          1229685
+Median:1232651.00
+Average:1222257.70
+===================================================================
+# Note: only a smoke test, TODO: data under testing env (i.e. hyperthreading disabled and etc.)
+# Current measured loopback peak bandwidth: 1MB/(1232651/2.7e9) = 17.11Gbps
