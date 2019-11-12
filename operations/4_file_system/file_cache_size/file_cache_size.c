@@ -25,8 +25,8 @@ uint64_t do_reads(uint64_t num_iterations, int file_fd, uint64_t read_size_bytes
 		// strict checking since we expect full size to be read
 		if (status < read_size_bytes)
 			handle_error_en(status, "read");
-		else
-			printf("Read %lluB from file\n", status);
+		// else
+		// 	printf("Read %lluB from file\n", status);
 	}
 
 	/* **************** **************** **************** time ends now **************** **************** **************** */
@@ -46,7 +46,7 @@ int main(int argc, char *argv[]){
 	int file_fd;
 	uint64_t file_size;
 	uint64_t temp;
-	uint64_t status;
+	int status;
 
 	uint64_t temp_size[] = {
 	      1*MB,   2*MB,   3*MB,   4*MB,   5*MB,   6*MB,   7*MB,   8*MB,   9*MB,  10*MB,
@@ -73,8 +73,12 @@ int main(int argc, char *argv[]){
 	printf("Size of file is %lluB\n", file_size);
 
 
-	for (uint64_t i = 19ULL; i < (sizeof(temp_size)/sizeof(uint64_t)); i++) {
-		printf("i:%llu\n", i);
+	status = fcntl(file_fd, F_RDAHEAD, 0);
+	if (status < 0)
+		handle_error_en(status, "fcntl_f_rdahead");
+
+	for (uint64_t i = 0ULL; i < (sizeof(temp_size)/sizeof(uint64_t)); i++) {
+		// printf("i:%llu\n", i);
 		// restore the seek to 0 position before reading
 		temp = lseek(file_fd, 0L, SEEK_SET);
 
@@ -88,7 +92,7 @@ int main(int argc, char *argv[]){
 		if (max_iterations_possible < 1ULL)
 			break;
 		else{
-			printf("temp:%llu\n", temp);
+			// printf("temp:%llu\n", temp);
 			//printf("max_iterations_possible:%llu for read_size_bytes:%lluMB\n", max_iterations_possible, read_size_bytes>>20);
 			if (max_iterations_possible >= NUM_ITERATIONS)
 				max_iterations_possible = NUM_ITERATIONS;
