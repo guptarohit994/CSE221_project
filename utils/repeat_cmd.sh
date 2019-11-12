@@ -63,11 +63,21 @@ median() {
     (( k=j-1 ))
     (( val=(${arr[j]} + ${arr[k]})/2 ))
   fi
-  printf "Median:%.2f\n" "${val}"
+  printf "Median:%d\n" "${val}"
+}
+
+stddev() {
+  arr=$(printf '%d\n' "${@}")
+  stddev=$(
+    echo "$arr" |
+    awk '{sum+=$1; sumsq+=$1*$1}END{print sqrt(sumsq/NR - (sum/NR)**2)}'
+  )
+  printf "Stddev:$stddev\n"
 }
 
 median ${TIMES[@]}
 AVERAGE=$(echo "scale = 6; $SUM / $REPEAT_COUNT" | bc)
 printf "Average:%.2f\n" "${AVERAGE}"
+stddev ${TIMES[@]}
 echo "==================================================================="
 
