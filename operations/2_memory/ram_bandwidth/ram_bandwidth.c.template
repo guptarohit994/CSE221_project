@@ -1,0 +1,70 @@
+#include "../../../utils/utils.h"
+
+#define NUM_ITERATIONS 100
+#define N_BYTES (1<<22) // 4MB
+#define N_INTS (N_BYTES >> 2)
+#define CACHE_SIZE (1536*1024) // 1.5MB
+
+char foo[CACHE_SIZE], bar[CACHE_SIZE];
+#define OBLIT_CACHE memcpy(foo, bar, CACHE_SIZE)
+
+int gsum = 0;
+
+uint64_t benchmark_read(int* beg, int* end) {
+    struct Timer timer;
+    int sum = 0;
+    uint64_t t = 0;
+
+    for (int i=0; i < NUM_ITERATIONS; ++i) {
+        int *p = beg;
+        OBLIT_CACHE;
+
+        tic(timer);
+        while (p < end) {
+$UNROLLED_LOOP_RD
+        }
+        toc(timer);
+        t += timer_diff(timer);
+    }
+    gsum += sum;
+    return t / NUM_ITERATIONS - READING_TIME_OVERHEAD;
+}
+#undef OP
+
+uint64_t benchmark_write(int* beg, int* end) {
+    struct Timer timer;
+    uint64_t t = 0;
+
+    for (int i=0; i < NUM_ITERATIONS; ++i) {
+        int *p = beg;
+        OBLIT_CACHE;
+
+        tic(timer);
+        while (p < end) {
+$UNROLLED_LOOP_WR
+        }
+        toc(timer);
+        t += timer_diff(timer);
+    }
+    return t / NUM_ITERATIONS - READING_TIME_OVERHEAD;
+}
+#undef OP
+
+int main() {
+    uint64_t tw, tr;
+    int arr[N_INTS];
+
+    tr = benchmark_read(arr, arr + N_INTS);
+    tw = benchmark_write(arr, arr + N_INTS);
+
+#ifdef _DEBUG
+    printf("%llu, %llu\n", tr, tw);
+#endif
+
+// bandwidth: GB/s = GB * cycles/s * 1/cycles
+#define t2b(t) (N_BYTES*1.0 / (1<<30) * 2.7e9 / (t))
+
+    printf("%.5f, %.5f\n", t2b(tr), t2b(tw));
+
+#undef t2b
+}

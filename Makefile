@@ -24,6 +24,7 @@ all: build \
 	 cpuid_memory_info \
 	 ram_access_time \
 	 ram_access_time_seq \
+	 ram_bandwidth \
 	 page_fault_time \
 	 round_trip_time \
 	 peak_bandwidth \
@@ -79,6 +80,10 @@ ram_access_time: build
 
 ram_access_time_seq: build
 	$(CC) $(OPTS) -D SEQUENTIAL_ACCESS -o build/ram_access_time_seq operations/2_memory/ram_access_time/ram_access_time.c
+
+ram_bandwidth: build
+	python3 operations/2_memory/ram_bandwidth/prepare.py -s 8 -l 1024
+	$(CC) -O3 -o build/ram_bandwidth operations/2_memory/ram_bandwidth/ram_bandwidth.c
 
 build/temp_1GB_file: build
 	$(info ************ A fake large file temp_1GB_file will be created ************)
