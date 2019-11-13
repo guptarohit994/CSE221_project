@@ -45,6 +45,7 @@ void do_accesses(Node *n, size_t mem_size)
     
     /* **************** **************** **************** time starts now **************** **************** **************** */
     tic(timer);
+
     asm (
       "mov %0, %%al\n\t"  // load data
       :
@@ -52,14 +53,14 @@ void do_accesses(Node *n, size_t mem_size)
     );
 
 
-    /* **************** **************** **************** time ends now **************** **************** **************** */
-    toc(timer);
-
     asm (
       "mfence\n\t"        // memory fence
       :
       :
     );
+    /* **************** **************** **************** time ends now **************** **************** **************** */
+    toc(timer);
+
     access_time = (uint64_t) (timer_diff(timer));
     access_times[count_nodes - 1] = access_time;
     total_access_time += access_time;
