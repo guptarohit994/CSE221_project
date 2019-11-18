@@ -1,10 +1,13 @@
 CC=gcc
-OPTS=-Werror -O0 
+OPTS=-Werror -O0
 #-g for default debug information
 #-Werror for warning as error
 
 define standard_compile
 	$(CC) $(OPTS) -o build/$2 operations/$1/$2/$2.c
+endef
+define standard_compile_O3
+	$(CC) -Werror -O3 -o build/$2 operations/$1/$2/$2.c
 endef
 # standard_compile Usage:
 # e.g. $(eval $(call standard_compile,dir,foo))
@@ -30,6 +33,7 @@ all: build \
 	 peak_bandwidth \
 	 connection_overhead_setup \
 	 connection_overhead_teardown \
+	 file_cache_size \
 	 file_read_time \
 	 file_read_time_seq
 
@@ -120,6 +124,14 @@ connection_overhead_teardown: build
 	$(CC) $(OPTS) -D SERVERADDR=\"127.0.0.1\" -D SERVERPORT=2000 -o build/connection_overhead_teardown operations/3_network/connection_overhead/connection_overhead_teardown.c
 
 ################### 4_file_system ###################
+
+build/temp_8GB_file: build
+	$(info ************ A fake large file temp_8GB_file will be created ************)
+	# mkfile -n 1g build/temp_8GB_file
+
+## file cache size
+file_cache_size: build build/temp_8GB_file
+	$(call standard_compile_O3,4_file_system,file_cache_size)
 
 ## file_read_time / remote_file_read_time
 file_read_time: build

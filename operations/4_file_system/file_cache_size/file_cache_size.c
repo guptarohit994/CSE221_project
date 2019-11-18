@@ -1,119 +1,103 @@
 #include "../../../utils/utils.h"
-//for open, O_RDONLY
 #include <sys/fcntl.h>
 #include <stdint.h>
 
-#define NUM_ITERATIONS 1025
+#define BLOCK_SIZE (4*KB)
+
+// Estimate file cache size
+// Methodology:
+//  * read a file 2 rounds
+// 	* In the 1st round, try to load the entire file into page cache
+//  * In the 2nd round, if file size doesn't exceed cache size, all access will be fast RAM accesses
+//  * If file size exceeds, slow accesses even in the 2nd round
+// Note:
+//  1. `purge` is necessary before each 1st round
+//  2. block size makes a difference
+//  3. disable readahead
 
 
-uint64_t do_reads(uint64_t num_iterations, int file_fd, uint64_t read_size_bytes){
-	uint64_t status;
+#define NONNEG(msg, status) \
+    ({ __typeof__ (status) _status = (status);  \
+    if (_status < 0) handle_error_en(_status, (msg)); })
 
-	// timer to measure time
-    struct Timer timer;
-    uint64_t cycles_taken;
+struct Timer timer;
 
-	// read the file
-	char *buffer;
-	buffer = (char *) malloc(read_size_bytes);
-
-	/* **************** **************** **************** time starts now **************** **************** **************** */
-    tic(timer);
-
-	for (uint64_t i = 0ULL; i < num_iterations; i++){
-		status = read(file_fd, buffer, read_size_bytes);
-		// strict checking since we expect full size to be read
-		if (status < read_size_bytes)
-			handle_error_en(status, "read");
-		// else
-		// 	printf("Read %lluB from file\n", status);
+uint64_t do_reads( int file_fd, char* buffer, uint64_t read_size) {
+	uint64_t bytes_read = 0;
+	tic(timer);
+	while (bytes_read < read_size) {
+	    bytes_read += read(file_fd, buffer, BLOCK_SIZE);
 	}
-
-	/* **************** **************** **************** time ends now **************** **************** **************** */
-    toc(timer);
-
-    cycles_taken = (uint64_t) (timer_diff(timer));
-
-	return cycles_taken;
+	toc(timer);
+	return timer_diff(timer);
 }
 
 int main(int argc, char *argv[]){
-	assert(argc == 2);
+	set_nice(-20);
 
-	char *filename;
-	filename = argv[1ULL];
-
-	int file_fd;
-	uint64_t file_size;
-	uint64_t temp;
-	int status;
-
-	uint64_t temp_size[] = {
-	      1*MB,   2*MB,   3*MB,   4*MB,   5*MB,   6*MB,   7*MB,   8*MB,   9*MB,  10*MB,
-	    100*MB, 200*MB, 300*MB, 400*MB, 500*MB, 600*MB, 700*MB, 800*MB, 900*MB,   1*GB, 
-	              2*GB,   3*GB,   4*GB,   5*GB,   6*GB,   7*GB,   8*GB,   9*GB,  10*GB,
-    };
-
-    uint64_t test = 5*MB*MB*1024ULL;
-
-	cnprintf(LOW, "main", "\n\n");
-
-	// open the file for reading
-	file_fd = open(filename, O_RDONLY);
-	if (file_fd < 0)
-		handle_error_en(file_fd, "open");
-	else
-		printf("Opened filename:%s for reading with fd:%d\n", filename, file_fd);
-
-	/* determine the size of filename */
-	file_size = lseek(file_fd, 0L, SEEK_END);
-	if (file_size < 0ULL)
-		handle_error_en(file_size, "fseek: SEEK_END");
-
-	printf("Size of file is %lluB\n", file_size);
-
-
-	status = fcntl(file_fd, F_RDAHEAD, 0);
-	if (status < 0)
-		handle_error_en(status, "fcntl_f_rdahead");
-
-	for (uint64_t i = 0ULL; i < (sizeof(temp_size)/sizeof(uint64_t)); i++) {
-		// printf("i:%llu\n", i);
-		// restore the seek to 0 position before reading
-		temp = lseek(file_fd, 0L, SEEK_SET);
-
-		// TODO temp is uint64_t
-		if (temp < 0ULL)
-			handle_error_en(temp, "fseek: SEEK_SET");
-
-		uint64_t read_size_bytes = temp_size[i];
-		uint64_t max_iterations_possible = (uint64_t) (file_size / read_size_bytes);
-
-		if (max_iterations_possible < 1ULL)
-			break;
-		else{
-			// printf("temp:%llu\n", temp);
-			//printf("max_iterations_possible:%llu for read_size_bytes:%lluMB\n", max_iterations_possible, read_size_bytes>>20);
-			if (max_iterations_possible >= NUM_ITERATIONS)
-				max_iterations_possible = NUM_ITERATIONS;
-		}
-
-		uint64_t cycles_taken_per_iteration = (uint64_t) (do_reads(max_iterations_possible, file_fd, read_size_bytes)/(max_iterations_possible));
-
-		// subtract overheads
-	    cycles_taken_per_iteration -= (READING_TIME_OVERHEAD + LOOP_OVERHEAD);
-
-	    if (i == 0ULL)
-			cnprintf(LOW, "main", "***************** RESULT: FILE_CACHE_SIZE *****************");
-	    //cnprintfsui64(LOW, "main", "iterations", max_iterations_possible);
-	    printf("main: (per iteration / %llu iterations of %lluMB each) cycles_taken = %llu\n", max_iterations_possible, temp_size[i]>>20ULL, cycles_taken_per_iteration);
+	if (argc != 2) {
+		handle_error("Usage: ./file_cache_size filename");
 	}
 
-	// close the file
-	status = close(file_fd);
-	if (status < 0ULL)
-		handle_error_en(status, "close");
-	
-	exit(EXIT_SUCCESS);
+	char *filename;
+	filename = argv[1];
 
+	// open the file for reading
+	int file_fd = open(filename, O_RDONLY);
+	NONNEG("open", file_fd);
+
+	// disable read ahead and enable disk cache
+	NONNEG("fcntl_f_rdahead", fcntl(file_fd, F_RDAHEAD, 0));
+	NONNEG("fcntl_f_nocache", fcntl(file_fd, F_NOCACHE, 0));
+
+#ifdef _DEBUG
+	printf("Opened filename:%s for reading with fd:%d\n", filename, file_fd);
+#endif
+
+	/* determine the size of file */
+	uint64_t file_size = lseek(file_fd, 0L, SEEK_END);
+	NONNEG("fseek: SEEK_END", file_size);
+#ifdef _DEBUG
+	printf("Size of file is %lluB\n", file_size);
+#endif
+
+	printf("Block size is %lluB\n", BLOCK_SIZE);
+
+	uint64_t file_sizes_to_read[] = {
+	    1*MB,   2*MB,   3*MB,   4*MB,   5*MB,   6*MB,   7*MB,   8*MB,   9*MB,  10*MB,
+	    100*MB, 200*MB, 300*MB, 400*MB, 500*MB, 600*MB, 700*MB, 800*MB, 900*MB,
+	    1*GB,   2*GB,   3*GB,   4*GB,
+		5000 * MB, 5080 * MB, 5160 * MB, 5240 * MB, 5320 * MB, 5400 * MB, 5480 * MB,
+		5560 * MB, 5640 * MB, 5720 * MB, 5800 * MB, 5880 * MB, 5960 * MB,
+		6*GB, 7*GB, 8*GB,
+    };
+
+	uint64_t cycles_taken = 0;
+	char *buffer = (char *) malloc(BLOCK_SIZE);
+
+	for (int i=0; i < (sizeof(file_sizes_to_read)/sizeof(uint64_t)); ++i) {
+		uint64_t size_to_read = file_sizes_to_read[i];
+
+		NONNEG("sync", system("sync"));    // sync: complete all disk writes
+		NONNEG("purge", system("purge"));  // purge: rest disk caches
+
+		// NONNEG("fseek: SEEK_SET", lseek(file_fd, rand() % (file_size - file_size_to_read), SEEK_SET));
+		NONNEG("fseek: SEEK_SET", lseek(file_fd, 0, SEEK_SET));
+		cycles_taken = do_reads(file_fd, buffer, size_to_read);
+
+#ifdef _DEBUG
+		printf("cache warmup round: %.2fMB, %.2fms, %.2fGB/s\n", (size_to_read*1.0/MB), cycles_taken/2.7e6, (size_to_read/(MB))/(cycles_taken/2.7e6));
+#endif
+
+		NONNEG("fseek: SEEK_SET", lseek(file_fd, 0, SEEK_SET));
+		cycles_taken = do_reads(file_fd, buffer, size_to_read);
+
+		// file size(MB), time (ms), bandwidth (GB/s)
+		printf("%.2f, %.2f, %.2f\n", (size_to_read*1.0/MB), cycles_taken/2.7e6, (size_to_read*1.0/MB)/(cycles_taken/2.7e6));
+	}
+
+	free(buffer);
+	NONNEG("close", close(file_fd));
+
+	exit(EXIT_SUCCESS);
 }

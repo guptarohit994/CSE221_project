@@ -19,52 +19,6 @@ struct MMem {
   int offset;
 };
 
-// This permutation code is taken from lmbench3
-// It returns a random permutation
-// Usage:
-//  size_t* perm = permutation(4, 1);
-//  // perm has been randomized, e.g. [3, 1, 0, 2]
-//  size_t* perm10 = permutation(4, 10);
-//  // 10 is the unit in perm10, e.g. [30, 10, 0, 20]
-//  free(perm);
-//  free(perm10); // remember to free it
-// Note: as a result of experiments, permutation doesn't make a significant difference
-size_t* permutation(int max, int scale) {
-    size_t  i, v;
-    static size_t r = 0;
-    size_t* result = (size_t*)malloc(max * sizeof(size_t));
-
-    if (result == NULL) return NULL;
-
-    for (i = 0; i < max; ++i) {
-        result[i] = i * (size_t)scale;
-    }
-
-    if (r == 0)
-        r = (getpid()<<6) ^ getppid() ^ rand() ^ (rand()<<10);
-
-    /* randomize the sequence */
-    for (i = max - 1; i > 0; --i) {
-        r = (r << 1) ^ rand();
-        v = result[r % (i + 1)];
-        result[r % (i + 1)] = result[i];
-        result[i] = v;
-    }
-
-#ifdef _DEBUG
-    fprintf(stderr, "permutation(%d): {", max);
-    for (i = 0; i < max; ++i) {
-      fprintf(stderr, "%zu", result[i]);
-      if (i < max - 1) 
-        fprintf(stderr, ",");
-    }
-    fprintf(stderr, "}\n");
-    fflush(stderr);
-#endif /* _DEBUG */
-
-    return (result);
-}
-
 struct linear_regression_result_t { 
     double slope;
     double intercept;
@@ -181,6 +135,4 @@ int main() {
     printf("%.9f (ms/page), bandwidth=%.2f(MB/s)\n", service_time/2.7e6, bandwidth);
 #endif
 }
-
-// Note: Without permutation, overhead is constant 
 

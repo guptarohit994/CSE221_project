@@ -1,27 +1,55 @@
-set_nice: pid = 53243, old_priority = 0, new_priority = -20
-main: total access:1MB, Average access time/block:4140 clock cycles
-main: total access:2MB, Average access time/block:4934 clock cycles
-main: total access:3MB, Average access time/block:5388 clock cycles
-main: total access:4MB, Average access time/block:4070 clock cycles
-main: total access:5MB, Average access time/block:3613 clock cycles
-main: total access:6MB, Average access time/block:3897 clock cycles
-main: total access:7MB, Average access time/block:3831 clock cycles
-main: total access:8MB, Average access time/block:4112 clock cycles
-main: total access:9MB, Average access time/block:3737 clock cycles
-main: total access:10MB, Average access time/block:3965 clock cycles
-main: total access:100MB, Average access time/block:4472 clock cycles
-main: total access:200MB, Average access time/block:4242 clock cycles
-main: total access:300MB, Average access time/block:4756 clock cycles
-main: total access:400MB, Average access time/block:6746 clock cycles
-main: total access:500MB, Average access time/block:6314 clock cycles
-main: total access:600MB, Average access time/block:5941 clock cycles
-main: total access:700MB, Average access time/block:5661 clock cycles
-main: total access:800MB, Average access time/block:5820 clock cycles
-main: total access:900MB, Average access time/block:5617 clock cycles
-main: total access:1024MB, Average access time/block:5674 clock cycles
-main: total access:2048MB, Average access time/block:9875 clock cycles
-main: total access:3072MB, Average access time/block:11375 clock cycles
-main: total access:4096MB, Average access time/block:13181 clock cycles
-main: total access:5120MB, Average access time/block:12787 clock cycles
-main: total access:6144MB, Average access time/block:13218 clock cycles
-main: total access:7168MB, Average access time/block:13186 clock cycles
+set_nice: pid = 75123, old_priority = 0, new_priority = -20
+Block size is 4096B
+size(MB), time(ms), bandwidth(GB/s)
+1.00, 0.30, 3.36
+2.00, 0.64, 3.10
+3.00, 0.99, 3.04
+4.00, 1.30, 3.08
+5.00, 1.59, 3.15
+6.00, 1.89, 3.17
+7.00, 2.17, 3.23
+8.00, 2.61, 3.06
+9.00, 3.65, 2.46
+10.00, 3.22, 3.11
+100.00, 31.06, 3.22
+200.00, 61.69, 3.24
+300.00, 93.16, 3.22
+400.00, 124.98, 3.20
+500.00, 164.09, 3.05
+600.00, 192.95, 3.11
+700.00, 227.28, 3.08
+800.00, 251.80, 3.18
+900.00, 283.75, 3.17
+1024.00, 323.05, 3.17
+2048.00, 667.02, 3.07
+3072.00, 1080.93, 2.84
+4096.00, 1339.51, 3.06
+4120.00, 1320.34, 3.12
+4140.00, 1278.62, 3.24
+4160.00, 1280.50, 3.25
+4180.00, 1343.91, 3.11
+4184.00, 1301.59, 3.21
+4188.00, 1345.00, 3.11
+4192.00, 1315.66, 3.19
+4200.00, 1308.43, 3.21
+4220.00, 1307.28, 3.23
+4240.00, 1311.61, 3.23
+4280.00, 1322.44, 3.24
+4340.00, 1346.19, 3.22
+4380.00, 1354.92, 3.23
+4420.00, 1410.41, 3.13
+4500.00, 1395.86, 3.22
+4580.00, 1403.75, 3.26
+4660.00, 1430.83, 3.26
+4740.00, 1455.39, 3.26
+4820.00, 1482.18, 3.25
+4980.00, 1542.06, 3.23
+5000.00, 1552.32, 3.22
+5040.00, 1735.85, 2.90
+5080.00, 3158.14, 1.61
+5140.00, 52733.96, 0.10
+5120.00, 52466.52, 0.10
+5160.00, 53341.77, 0.10
+6144.00, 63558.47, 0.10
+7168.00, 74441.74, 0.10
+8192.00, 85996.98, 0.10
