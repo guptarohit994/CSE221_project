@@ -5,8 +5,28 @@
 
 #include "../../../utils/utils.h"
 
-#define NUM_ITERATIONS 10
-#define DATABYTES 65535 // 32KB
+/* Methodology
+ * 1. In each iteration, server sends a 1M package
+ * 2. Client will receive that package in 4KB segments
+ * 3. Skip the first package because of the initial bursting
+ * 4. tic after the second package arrived
+ * 5. toc after the last package arrived
+ * Notes
+ * 1. The initial bursting phenomenon
+ * 2. The slow-start algorithm used by TCP
+ * 3. The impact of package size
+ * 4. The tradeoff of num_iterations
+ * 5. Catalina reports its bandwidth as 304.2 Mbps, which is much slower than the actual bandwidth(1~2 GB/s on loopback)
+ *      This is believed to be a bug(https://discussions.apple.com/thread/250711080)
+ * 6. The choice of databytes: large enough to cancel out slow-start algorithm
+*/ 
+
+#define NUM_ITERATIONS 20
+#define DATABYTES (8*MB)
+#define BUF_SIZE (4*KB)
+#define INIT_PKG 100
+
+uint64_t history[DATABYTES/BUF_SIZE];
 
 #define NONNEG(msg, status) \
     ({ __typeof__ (status) _status = (status);  \
@@ -41,7 +61,7 @@ void server_main() {
 
     // prepare data to send
     char* msg = (char*)malloc(DATABYTES);
-    // memset(msg, 's', DATABYTES);
+    memset(msg, 's', DATABYTES);
 
 listen:
     NONNEG("server listen", listen(server_sock, 1));
@@ -50,7 +70,6 @@ listen:
     socklen_t client_len = sizeof(client_addr);
     int client_sock = accept(server_sock, (struct sockaddr *)&server_addr, &client_len);
     NONNEG("server accept", client_sock);
-
 
     // keep sending data
     for (int i = 0; i < NUM_ITERATIONS; ++i) {
@@ -83,24 +102,43 @@ uint64_t client_main() {
     NONNEG("client connect", connect(client_sock, (struct sockaddr*) &server_addr, sizeof(server_addr)));
 
     // prepare buffer
-	char* buf = (char*)malloc(DATABYTES);
+	char* buf = (char*)malloc(BUF_SIZE);
 
-    // time it: keep receiving datar
+    // time it: keep receiving data
     struct Timer timer;
+    uint64_t min_t = 0; 
 
-    tic(timer);
     for (int i = 0; i < NUM_ITERATIONS; ++i) {
-        int rcvd = recv(client_sock, buf, DATABYTES, MSG_WAITALL);
+        int rcvd = 0;
+        int pkg_count = 0;
+        while( (rcvd += recv(client_sock, buf, BUF_SIZE, MSG_WAITALL)) < DATABYTES) {
+            if (pkg_count == INIT_PKG) {
+                tic(timer);
+            } else if (pkg_count > INIT_PKG) {
+                toc(timer);
+                history[pkg_count] = timer_diff(timer);
+            }
+            ++pkg_count;
+        }
+
 #ifdef _DEBUG
         printf("client received: %d KB\n", rcvd >> 10);
+        for (int i = 0; i < pkg_count; ++i) {
+            if (i <= INIT_PKG) {
+                printf("%llu, N/A\n", i * BUF_SIZE);
+            } else {
+                printf("%llu, %llu\n", i * BUF_SIZE, history[i]);
+            }
+        }
 #endif
+        uint64_t t = timer_diff(timer) - 32 * pkg_count;
+        if (min_t == 0 || t < min_t) min_t = t;
     }
-    toc(timer);
 
     // close sockets
 	NONNEG("client close",   close(client_sock));
     free(buf);
-    return timer_diff(timer);
+    return min_t;
 }
 
 
@@ -113,11 +151,11 @@ int main(int argc, char** argv){
 
         cnprintf(LOW, "main", "***************** RESULT: PEAK_BANDWIDTH *****************");
         cnprintfsi(LOW, "main", "iterations", NUM_ITERATIONS);
-        cnprintfsui64(LOW, "main", "(per iteration) cycles_taken", cycles_taken / NUM_ITERATIONS);
+        cnprintfsui64(LOW, "main", "min cycles_taken", cycles_taken);
 
-        double bandwidth = (8 * (double)(DATABYTES)/(GB)) / ((double)cycles_taken / NUM_ITERATIONS / 2.7e9);
-        printf("bandwidth: %.2f Gbps\n", bandwidth);
 #ifdef _DEBUG
+        double bandwidth = (double)(DATABYTES - (INIT_PKG + 1) * BUF_SIZE)/ (MB) / (cycles_taken / 2.7e9);
+        printf("max bandwidth: %.2f MB/s\n", bandwidth);
 #endif
     }
 }
