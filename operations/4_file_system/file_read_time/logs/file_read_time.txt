@@ -1,0 +1,20 @@
+[Frodo:cse_221/project/CSE221_project] rohitgupta% sudo ./build/file_read_time_sizes.sh ./build/file_read_time
+Password:
+===================================================================
+main: total access:1MB, Average access time/block(256):2101964 clock cycles
+main: total access:2MB, Average access time/block(512):1052482 clock cycles
+main: total access:4MB, Average access time/block(1024):812065 clock cycles
+main: total access:8MB, Average access time/block(2048):641989 clock cycles
+main: total access:16MB, Average access time/block(4096):488055 clock cycles
+main: total access:32MB, Average access time/block(8192):31930 clock cycles
+main: total access:64MB, Average access time/block(16384):32518 clock cycles
+main: total access:128MB, Average access time/block(32768):21816 clock cycles
+main: total access:256MB, Average access time/block(65536):17950 clock cycles
+main: total access:512MB, Average access time/block(131072):14253 clock cycles
+main: total access:1024MB, Average access time/block(262144):13158 clock cycles
+main: total access:2048MB, Average access time/block(524288):12952 clock cycles
+main: total access:3072MB, Average access time/block(786432):12799 clock cycles
+main: total access:4096MB, Average access time/block(1048576):12786 clock cycles
+main: total access:5120MB, Average access time/block(1310720):12985 clock cycles
+main: total access:6144MB, Average access time/block(1572864):13197 clock cycles
+main: total access:7168MB, Average access time/block(1835008):12977 clock cycles

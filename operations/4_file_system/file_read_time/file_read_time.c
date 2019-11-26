@@ -118,11 +118,14 @@ uint64_t do_reads(Node *array, int file_fd, uint64_t read_size_bytes){
 		/* **************** **************** **************** time ends now **************** **************** **************** */
     	toc(timer);
 
-    	cycles_taken += (uint64_t) (timer_diff(timer));
+    	uint64_t this_time = (uint64_t) (timer_diff(timer));
+    	//printf("count_nodes:%llu, node_num:%llu, cycles:%llu\n", count_nodes, current->block, this_time);
+    	cycles_taken += this_time;
 		
 		next = current->next;
 		current = next;
 	}
+	//printf("count_nodes:%llu\n", count_nodes);
 	return cycles_taken;
 }
 
@@ -195,8 +198,9 @@ int main(int argc, char *argv[]) {
 	// }
 	// printf("\n");
 
+	system("purge");
 	uint64_t cycles_taken_per_iteration = (uint64_t) (do_reads(array, file_fd, BLOCKSIZE*1ULL)/total_blocks);
-	printf("main: total access:%lluMB, Average access time/block:%llu clock cycles\n", file_size>>20ULL, cycles_taken_per_iteration);
+	printf("main: total access:%lluMB, Average access time/block(%llu):%llu clock cycles\n", file_size>>20ULL, total_blocks,cycles_taken_per_iteration);
 
 	// close the file
 	status = close(file_fd);
