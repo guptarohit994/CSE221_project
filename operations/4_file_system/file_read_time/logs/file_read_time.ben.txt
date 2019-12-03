@@ -1,0 +1,45 @@
+➜  src git:(master) ✗ sudo ./build/file_read_time_sizes.sh ./build/file_read_time_seq
+===================================================================
+main: total access:128KB, Average access time/block(32):992349 clock cycles
+main: total access:256KB, Average access time/block(64):490581 clock cycles
+main: total access:512KB, Average access time/block(128):507070 clock cycles
+main: total access:1MB, Average access time/block(256):341850 clock cycles
+main: total access:2MB, Average access time/block(512):316896 clock cycles
+main: total access:4MB, Average access time/block(1024):206814 clock cycles
+main: total access:8MB, Average access time/block(1024):213863 clock cycles
+main: total access:16MB, Average access time/block(1024):199088 clock cycles
+main: total access:32MB, Average access time/block(1024):49101 clock cycles
+main: total access:64MB, Average access time/block(1024):52232 clock cycles
+main: total access:128MB, Average access time/block(1024):50587 clock cycles
+main: total access:256MB, Average access time/block(1024):45057 clock cycles
+main: total access:512MB, Average access time/block(1024):38698 clock cycles
+main: total access:1GB, Average access time/block(1024):41848 clock cycles
+main: total access:2GB, Average access time/block(1024):37695 clock cycles
+main: total access:3GB, Average access time/block(1024):43746 clock cycles
+main: total access:4GB, Average access time/block(1024):38568 clock cycles
+main: total access:5GB, Average access time/block(1024):44174 clock cycles
+main: total access:6GB, Average access time/block(1024):51064 clock cycles
+main: total access:7GB, Average access time/block(1024):34688 clock cycles
+
+➜  src git:(master) ✗ sudo ./build/file_read_time_sizes.sh ./build/file_read_time
+===================================================================
+main: total access:128KB, Average access time/block(32):1232224 clock cycles
+main: total access:256KB, Average access time/block(64):878678 clock cycles
+main: total access:512KB, Average access time/block(128):516002 clock cycles
+main: total access:1MB, Average access time/block(256):369356 clock cycles
+main: total access:2MB, Average access time/block(512):416697 clock cycles
+main: total access:4MB, Average access time/block(1024):336204 clock cycles
+main: total access:8MB, Average access time/block(1024):388181 clock cycles
+main: total access:16MB, Average access time/block(1024):333868 clock cycles
+main: total access:32MB, Average access time/block(1024):47205 clock cycles
+main: total access:64MB, Average access time/block(1024):48785 clock cycles
+main: total access:128MB, Average access time/block(1024):41596 clock cycles
+main: total access:256MB, Average access time/block(1024):41923 clock cycles
+main: total access:512MB, Average access time/block(1024):30866 clock cycles
+main: total access:1GB, Average access time/block(1024):53095 clock cycles
+main: total access:2GB, Average access time/block(1024):36352 clock cycles
+main: total access:3GB, Average access time/block(1024):33912 clock cycles
+main: total access:4GB, Average access time/block(1024):35847 clock cycles
+main: total access:5GB, Average access time/block(1024):40462 clock cycles
+main: total access:6GB, Average access time/block(1024):40995 clock cycles
+main: total access:7GB, Average access time/block(1024):30709 clock cycles
