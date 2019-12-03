@@ -45,6 +45,41 @@ fi
 #echo "\nS.No.\t       \tAv time (in cycles)"
 echo "==================================================================="
 
+# for KB
+for i in {128,256,512}
+do
+    FILE_SIZE=`expr $i \* 1024`
+
+    FILE_NAME="temp_${i}_KB_file"
+    FILE_NAME_WITH_PATH="/tmp/${FILE_NAME}"
+    # printf "%d\t%s\n" "${FILE_SIZE}" "${FILE_NAME_WITH_PATH}"
+
+    if [ $SKIP_CREATE -eq 0 ]
+    then
+        # make a fake temp file in MBs
+        TEMP=`mkfile -n "${i}k" $FILE_NAME_WITH_PATH`
+        if [ "$TEMP" != "" ]
+        then
+            echo "Error! Could not create a temp file."
+            exit 1
+        fi
+    else
+        FILE_NAME_WITH_PATH=$FILE_TO_USE
+    fi
+    # clean mac file cache
+    sudo purge
+
+    OUTPUT=`./$EXECUTABLE $FILE_NAME_WITH_PATH $FILE_SIZE | grep -i "clock cycles"`
+    if [ "$OUTPUT" = "" ]
+    then
+        echo "Error! Something went wrong for FILE_SIZE:${FILE_SIZE}B"
+    else
+        printf "%s\n" "${OUTPUT}"
+    fi
+
+    rm -f $FILE_NAME_WITH_PATH
+done
+
 
 # for MB
 for i in {1,2,4,8,16,32,64,128,256,512}

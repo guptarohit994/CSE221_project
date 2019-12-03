@@ -35,7 +35,9 @@ all: build \
 	 connection_overhead_teardown \
 	 file_cache_size \
 	 file_read_time \
-	 file_read_time_seq
+	 file_read_time_seq \
+	 file_read_time_no_limit \
+	 file_read_time_no_limit_seq
 
 build: 
 	mkdir -p build
@@ -133,15 +135,24 @@ build/temp_8GB_file: build
 file_cache_size: build build/temp_8GB_file
 	$(call standard_compile_O3,4_file_system,file_cache_size)
 
-## file_read_time / remote_file_read_time
-file_read_time: build
+copy_file_read_script: build
 	cp operations/4_file_system/file_read_time/file_read_time_sizes.sh build/file_read_time_sizes.sh
+
+## file_read_time / remote_file_read_time
+file_read_time: build copy_file_read_script
 	$(CC) $(OPTS) -o build/file_read_time operations/4_file_system/file_read_time/file_read_time.c
 
 ## file_read_time_seq / remote_file_read_time_seq
-file_read_time_seq: build
-	cp operations/4_file_system/file_read_time/file_read_time_sizes.sh build/file_read_time_sizes.sh
+file_read_time_seq: build copy_file_read_script
 	$(CC) $(OPTS) -D SEQUENTIAL_ACCESS -o build/file_read_time_seq operations/4_file_system/file_read_time/file_read_time.c
+
+## file_read_time / remote_file_read_time no limits, read max possible blocks in a file
+file_read_time_no_limit: build copy_file_read_script
+	$(CC) $(OPTS) -D NO_LIMIT -o build/file_read_time_no_limit operations/4_file_system/file_read_time/file_read_time.c
+
+file_read_time_no_limit_seq: build copy_file_read_script
+	$(CC) $(OPTS) -D NO_LIMIT -D SEQUENTIAL_ACCESS -o build/file_read_time_no_limit_seq operations/4_file_system/file_read_time/file_read_time.c
+
 
 clean:
 	rm -f build/*;

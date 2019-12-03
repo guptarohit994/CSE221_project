@@ -1,6 +1,7 @@
 #include "../../../utils/utils.h"
 //for open, O_RDONLY
 #include <sys/fcntl.h>
+#define MAX_BLOCK_READ_COUNT 1024
 
 /* struct for linked list */
 typedef struct Node  
@@ -99,13 +100,13 @@ uint64_t do_reads(Node *array, int file_fd, uint64_t read_size_bytes){
 		// timer to measure time
     	struct Timer timer;
 
+    	/* **************** **************** **************** time starts now **************** **************** **************** */
+    	tic(timer);
+
     	// move the seek to corresponding block
 		status = lseek(file_fd, ((current->block)*BLOCKSIZE*1ULL), SEEK_SET);
 		if (status != (current->block)*BLOCKSIZE*1ULL)
 			handle_error("lseek");
-
-		/* **************** **************** **************** time starts now **************** **************** **************** */
-    	tic(timer);
 
 		// perform the reads
 		status = read(file_fd, buffer, read_size_bytes);
@@ -124,6 +125,11 @@ uint64_t do_reads(Node *array, int file_fd, uint64_t read_size_bytes){
 		
 		next = current->next;
 		current = next;
+
+#ifndef NO_LIMIT
+		if (count_nodes >= MAX_BLOCK_READ_COUNT)
+			break;
+#endif
 	}
 	//printf("count_nodes:%llu\n", count_nodes);
 	return cycles_taken;
@@ -198,9 +204,21 @@ int main(int argc, char *argv[]) {
 	// }
 	// printf("\n");
 
+	system("sync");
 	system("purge");
+
+#ifndef NO_LIMIT
+	if (total_blocks >= MAX_BLOCK_READ_COUNT)
+		total_blocks = MAX_BLOCK_READ_COUNT;
+#endif
+
 	uint64_t cycles_taken_per_iteration = (uint64_t) (do_reads(array, file_fd, BLOCKSIZE*1ULL)/total_blocks);
-	printf("main: total access:%lluMB, Average access time/block(%llu):%llu clock cycles\n", file_size>>20ULL, total_blocks,cycles_taken_per_iteration);
+	if (file_size>>30ULL >= 1)
+		printf("main: total access:%lluGB, Average access time/block(%llu):%llu clock cycles\n", file_size>>30ULL, total_blocks,cycles_taken_per_iteration);
+	else if (file_size>>20ULL >= 1)
+		printf("main: total access:%lluMB, Average access time/block(%llu):%llu clock cycles\n", file_size>>20ULL, total_blocks,cycles_taken_per_iteration);
+	else
+		printf("main: total access:%lluKB, Average access time/block(%llu):%llu clock cycles\n", file_size>>10ULL, total_blocks,cycles_taken_per_iteration);
 
 	// close the file
 	status = close(file_fd);
