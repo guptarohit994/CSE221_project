@@ -153,6 +153,9 @@ file_read_time_no_limit: build copy_file_read_script
 file_read_time_no_limit_seq: build copy_file_read_script
 	$(CC) $(OPTS) -D NO_LIMIT -D SEQUENTIAL_ACCESS -o build/file_read_time_no_limit_seq operations/4_file_system/file_read_time/file_read_time.c
 
+contension:
+	$(CC) $(OPTS) -o build/contension operations/4_file_system/contension/contension.c
+
 
 clean:
 	rm -f build/*;
