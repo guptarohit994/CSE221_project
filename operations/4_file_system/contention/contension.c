@@ -14,6 +14,7 @@ uint64_t readFile(char* filename)
 	int file_fd;
 	int fileStatus;
 	
+    system("purge");
 	/* open the file for reading */
 	file_fd = open(filename, O_RDONLY);
 	if (file_fd < 0)
@@ -73,13 +74,16 @@ int main(int argc, char *argv[]) {
 	{
 		if(fork() == 0)
 		{
-			uint64_t tempValue = readFile(fileNames[i]);
+			uint64_t tempValue = readFile(fileNames[i+1]);
 			times[i] = tempValue; //I wrote these two lines and stored them so that the compiler does not optimize the reads
+			printf("Finished Contension with %d children at cycles:%llu\n",i+1, tempValue);
 		}
 		else
 		{
-			uint64_t tempValue = readFile(fileNames[i]);
-			printf("Finished Contension with %d children\n at cycles:%llu", children, file_fd);
+            if (i == 0) {
+			    uint64_t tempValue = readFile(fileNames[i]);
+			    printf("Finished Contension with %d children at cycles:%llu\n", children, tempValue);
+            }
 		}
 	}
 	return 0;
