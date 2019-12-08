@@ -1,3 +1,5 @@
+#!/bin/sh
+
 DIRECTORY="./build/"
 if [ ! -d "$DIRECTORY" ]; then
   echo "Error! try doing a make first"
@@ -41,7 +43,7 @@ echo "Page fault service time"
 echo "------------------------------------------------------------------"
 
 echo "Size of file cache"
-./build/file_cache_size
+./build/file_cache_size.sh ./build/file_cache_size
 echo "------------------------------------------------------------------"
 
 echo "File read time"
