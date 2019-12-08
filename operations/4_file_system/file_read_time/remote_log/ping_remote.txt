@@ -1,0 +1,46 @@
+[Frodo:~/Desktop/UCSD/quarter_4] rohitgupta% ping ieng6.ucsd.edu
+PING ieng6.ucsd.edu (128.54.70.238): 56 data bytes
+64 bytes from 128.54.70.238: icmp_seq=0 ttl=48 time=19.646 ms
+64 bytes from 128.54.70.238: icmp_seq=1 ttl=48 time=18.519 ms
+64 bytes from 128.54.70.238: icmp_seq=2 ttl=48 time=19.482 ms
+64 bytes from 128.54.70.238: icmp_seq=3 ttl=48 time=18.847 ms
+64 bytes from 128.54.70.238: icmp_seq=4 ttl=48 time=18.831 ms
+64 bytes from 128.54.70.238: icmp_seq=5 ttl=48 time=19.947 ms
+64 bytes from 128.54.70.238: icmp_seq=6 ttl=48 time=18.448 ms
+64 bytes from 128.54.70.238: icmp_seq=7 ttl=48 time=20.135 ms
+64 bytes from 128.54.70.238: icmp_seq=8 ttl=48 time=20.784 ms
+64 bytes from 128.54.70.238: icmp_seq=9 ttl=48 time=20.967 ms
+64 bytes from 128.54.70.238: icmp_seq=10 ttl=48 time=18.583 ms
+64 bytes from 128.54.70.238: icmp_seq=11 ttl=48 time=19.245 ms
+64 bytes from 128.54.70.238: icmp_seq=12 ttl=48 time=18.975 ms
+64 bytes from 128.54.70.238: icmp_seq=13 ttl=48 time=19.296 ms
+64 bytes from 128.54.70.238: icmp_seq=14 ttl=48 time=21.304 ms
+64 bytes from 128.54.70.238: icmp_seq=15 ttl=48 time=19.585 ms
+64 bytes from 128.54.70.238: icmp_seq=16 ttl=48 time=18.995 ms
+64 bytes from 128.54.70.238: icmp_seq=17 ttl=48 time=20.065 ms
+64 bytes from 128.54.70.238: icmp_seq=18 ttl=48 time=18.643 ms
+64 bytes from 128.54.70.238: icmp_seq=19 ttl=48 time=25.440 ms
+64 bytes from 128.54.70.238: icmp_seq=20 ttl=48 time=19.172 ms
+64 bytes from 128.54.70.238: icmp_seq=21 ttl=48 time=18.576 ms
+64 bytes from 128.54.70.238: icmp_seq=22 ttl=48 time=19.745 ms
+64 bytes from 128.54.70.238: icmp_seq=23 ttl=48 time=19.207 ms
+64 bytes from 128.54.70.238: icmp_seq=24 ttl=48 time=17.745 ms
+64 bytes from 128.54.70.238: icmp_seq=25 ttl=48 time=18.760 ms
+64 bytes from 128.54.70.238: icmp_seq=26 ttl=48 time=20.226 ms
+64 bytes from 128.54.70.238: icmp_seq=27 ttl=48 time=19.300 ms
+64 bytes from 128.54.70.238: icmp_seq=28 ttl=48 time=19.194 ms
+64 bytes from 128.54.70.238: icmp_seq=29 ttl=48 time=19.109 ms
+64 bytes from 128.54.70.238: icmp_seq=30 ttl=48 time=18.690 ms
+64 bytes from 128.54.70.238: icmp_seq=31 ttl=48 time=19.281 ms
+64 bytes from 128.54.70.238: icmp_seq=32 ttl=48 time=17.807 ms
+64 bytes from 128.54.70.238: icmp_seq=33 ttl=48 time=97.334 ms
+64 bytes from 128.54.70.238: icmp_seq=34 ttl=48 time=19.112 ms
+64 bytes from 128.54.70.238: icmp_seq=35 ttl=48 time=18.115 ms
+64 bytes from 128.54.70.238: icmp_seq=36 ttl=48 time=17.417 ms
+64 bytes from 128.54.70.238: icmp_seq=37 ttl=48 time=20.213 ms
+64 bytes from 128.54.70.238: icmp_seq=38 ttl=48 time=18.662 ms
+64 bytes from 128.54.70.238: icmp_seq=39 ttl=48 time=18.484 ms
+^C
+--- ieng6.ucsd.edu ping statistics ---
+40 packets transmitted, 40 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 17.417/21.297/97.334/12.243 ms

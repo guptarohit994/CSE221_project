@@ -1,0 +1,24 @@
+[Frodo:cse_221/project/CSE221_project] rohitgupta% sudo ./build/file_read_time_sizes.sh ./build/file_read_time ~/ieng6/221_test/
+Password:
+Using file:/Users/rohitgupta/ieng6/221_test/ instead of creating one
+===================================================================
+main: total access:128KB, Average access time/block(32):69543857 clock cycles
+main: total access:256KB, Average access time/block(64):58735454 clock cycles
+main: total access:512KB, Average access time/block(128):55503708 clock cycles
+main: total access:1MB, Average access time/block(256):55496092 clock cycles
+main: total access:2MB, Average access time/block(512):77469376 clock cycles
+main: total access:4MB, Average access time/block(1024):55007107 clock cycles
+main: total access:8MB, Average access time/block(1024):57113248 clock cycles
+main: total access:16MB, Average access time/block(1024):55303971 clock cycles
+main: total access:32MB, Average access time/block(1024):56502063 clock cycles
+main: total access:64MB, Average access time/block(1024):55739287 clock cycles
+main: total access:128MB, Average access time/block(1024):93390548 clock cycles
+main: total access:256MB, Average access time/block(1024):56295501 clock cycles
+main: total access:512MB, Average access time/block(1024):55959462 clock cycles
+main: total access:1GB, Average access time/block(1024):55505095 clock cycles
+main: total access:2GB, Average access time/block(1024):56100125 clock cycles
+main: total access:3GB, Average access time/block(1024):58413921 clock cycles
+main: total access:4GB, Average access time/block(1024):58675522 clock cycles
+main: total access:5GB, Average access time/block(1024):69095978 clock cycles
+main: total access:6GB, Average access time/block(1024):57515622 clock cycles
+main: total access:7GB, Average access time/block(1024):58220136 clock cycles

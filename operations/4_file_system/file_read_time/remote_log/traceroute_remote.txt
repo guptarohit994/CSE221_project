@@ -1,0 +1,25 @@
+[Frodo:~/Desktop/UCSD/quarter_4] rohitgupta% traceroute ieng6.ucsd.edu
+traceroute to ieng6.ucsd.edu (128.54.70.238), 64 hops max, 52 byte packets
+ 1  192.168.0.1 (192.168.0.1)  2.792 ms  2.480 ms  2.107 ms
+ 2  142.254.184.149 (142.254.184.149)  11.916 ms  11.570 ms  10.335 ms
+ 3  agg63.sndhcaht02h.socal.rr.com (76.167.26.109)  155.046 ms  56.433 ms  22.361 ms
+ 4  agg21.sndhcaax02r.socal.rr.com (72.129.1.56)  17.304 ms  12.663 ms  15.715 ms
+ 5  agg22.tustcaft01r.socal.rr.com (72.129.1.2)  24.065 ms  18.480 ms  23.915 ms
+ 6  bu-ether26.tustca4200w-bcr00.tbone.rr.com (66.109.3.232)  23.373 ms  19.010 ms  23.628 ms
+ 7  bu-ether14.lsancarc0yw-bcr00.tbone.rr.com (66.109.6.4)  18.629 ms
+    be4.clmkohpe01r.midwest.rr.com (107.14.19.37)  17.846 ms  21.111 ms
+ 8  0.ae4.pr0.lax00.tbone.rr.com (107.14.19.86)  36.465 ms
+    0.ae0.pr0.lax00.tbone.rr.com (66.109.6.135)  15.795 ms
+    0.ae4.pr0.lax00.tbone.rr.com (107.14.19.86)  16.069 ms
+ 9  universitycorpforadvancedinternet.as11164.any2ix.coresite.com (206.72.210.14)  24.185 ms  17.568 ms  16.038 ms
+10  lo-0.8.rtsw.losa.net.internet2.edu (64.57.20.255)  15.895 ms  16.483 ms  15.779 ms
+11  64.57.20.83 (64.57.20.83)  17.464 ms  17.205 ms  17.343 ms
+12  dc-lax-agg6--lax-agg8-100ge-2.cenic.net (137.164.11.6)  17.383 ms  16.368 ms  18.724 ms
+13  dc-tus-agg8--lax-agg6-100ge-1.cenic.net (137.164.11.23)  17.691 ms
+    tus-agg8--lax-agg6-100g-3.cenic.net (137.164.11.61)  17.922 ms
+    dc-tus-agg8--lax-agg6-100ge-1.cenic.net (137.164.11.23)  17.945 ms
+14  sdg-agg4--tus-agg8-3x100ge.cenic.net (137.164.11.51)  17.864 ms  20.137 ms  18.196 ms
+15  dc-ucsd-100ge--sdg-agg4.cenic.net (137.164.23.177)  22.437 ms  22.372 ms  18.592 ms
+16  nodeb-core-6807-vlan2760-gw.ucsd.edu (132.239.254.161)  187.472 ms  19.373 ms  50.609 ms
+17  vss-adcom-720-vlan937-gw.ucsd.edu (169.228.234.9)  18.199 ms  19.112 ms  18.924 ms
+18  ieng6.ucsd.edu (128.54.70.238)  19.252 ms !Z  19.625 ms !Z  18.893 ms !Z

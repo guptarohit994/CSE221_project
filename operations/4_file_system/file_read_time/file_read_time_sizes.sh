@@ -13,7 +13,8 @@
 
 
 EXECUTABLE=$1
-FILE_TO_USE=$2
+# looks for files in this path
+PATH_TO_SEARCH=$2
 
 # check if run as root
 ID=`id -u`
@@ -34,12 +35,12 @@ else
     fi
 fi
 
-if [ -z "$FILE_TO_USE" ]
+if [ -z "$PATH_TO_SEARCH" ]
 then
     SKIP_CREATE=0
 else
     SKIP_CREATE=1
-    echo "Using file:$FILE_TO_USE instead of creating one"
+    echo "Using files (like temp_4_KB_file) in path:${PATH_TO_SEARCH} instead of creating one"
 fi
 
 #echo "\nS.No.\t       \tAv time (in cycles)"
@@ -64,7 +65,7 @@ do
             exit 1
         fi
     else
-        FILE_NAME_WITH_PATH=$FILE_TO_USE
+        FILE_NAME_WITH_PATH="${PATH_TO_SEARCH}/${FILE_NAME}"
     fi
     # clean mac file cache
     sudo purge
@@ -77,7 +78,10 @@ do
         printf "%s\n" "${OUTPUT}"
     fi
 
-    rm -f $FILE_NAME_WITH_PATH
+    if [ $SKIP_CREATE -eq 0 ]
+    then
+        rm -f $FILE_NAME_WITH_PATH
+    fi
 done
 
 
@@ -100,7 +104,7 @@ do
             exit 1
         fi
     else
-        FILE_NAME_WITH_PATH=$FILE_TO_USE
+        FILE_NAME_WITH_PATH="${PATH_TO_SEARCH}/${FILE_NAME}"
     fi
     # clean mac file cache
     sudo purge
@@ -113,7 +117,10 @@ do
         printf "%s\n" "${OUTPUT}"
     fi
 
-    rm -f $FILE_NAME_WITH_PATH
+    if [ $SKIP_CREATE -eq 0 ]
+    then
+        rm -f $FILE_NAME_WITH_PATH
+    fi
 done
 
 # for GB
@@ -135,7 +142,7 @@ do
             exit 1
         fi
     else
-        FILE_NAME_WITH_PATH=$FILE_TO_USE
+        FILE_NAME_WITH_PATH="${PATH_TO_SEARCH}/${FILE_NAME}"
     fi
     # clean mac file cache
     sudo purge
@@ -148,5 +155,8 @@ do
         printf "%s\n" "${OUTPUT}"
     fi
 
-    rm -f $FILE_NAME_WITH_PATH
+    if [ $SKIP_CREATE -eq 0 ]
+    then
+        rm -f $FILE_NAME_WITH_PATH
+    fi
 done
