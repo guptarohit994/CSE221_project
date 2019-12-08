@@ -13,6 +13,74 @@ Ben Zhou                      <br>
   * [Important Know-how for Mac](#important-know-how-for-mac)
 
 ## Directory Structure
+```
+├── Makefile
+├── operations
+│   ├── 1_cpu_scheduling_and_os_services
+│   │   ├── README.md
+│   │   ├── context_switch_time
+│   │   │   ├── context_switch_kthreads.c
+│   │   │   ├── context_switch_processes.c
+│   │   │   └── logs/
+│   │   ├── measurement_overhead
+│   │   │   ├── logs/
+│   │   │   ├── loop_overhead.c
+│   │   │   └── reading_time_overhead.c
+│   │   ├── procedure_call
+│   │   │   ├── logs/
+│   │   │   └── procedure_call.c
+│   │   ├── system_call
+│   │   │   ├── logs/
+│   │   │   └── system_call.c
+│   │   └── task_creation_time
+│   │       ├── creation_kthreads.c
+│   │       ├── creation_processes.c
+│   │       └── logs/
+│   ├── 2_memory
+│   │   ├── README.md
+│   │   ├── cpuid_memory_info
+│   │   │   └── cpuid_memory_info.c
+│   │   ├── page_fault_time
+│   │   │   ├── logs/
+│   │   │   └── page_fault_time.c
+│   │   ├── ram_access_time
+│   │   │   ├── logs/
+│   │   │   └── ram_access_time.c
+│   │   └── ram_bandwidth
+│   │       ├── logs/
+│   │       ├── prepare.py
+│   │       ├── ram_bandwidth.c
+│   │       └── ram_bandwidth.c.template
+│   ├── 3_network
+│   │   ├── README.md
+│   │   ├── connection_overhead
+│   │   │   ├── connection_overhead_setup.c
+│   │   │   ├── connection_overhead_teardown.c
+│   │   │   └── logs/
+│   │   ├── peak_bandwidth
+│   │   │   ├── logs/
+│   │   │   └── peak_bandwidth.c
+│   │   └── round_trip_time
+│   │       ├── logs/
+│   │       └── round_trip_time.c
+│   └── 4_file_system
+│       ├── README.md
+│       ├── contention
+│       │   ├── contention.c
+│       │   └── file_contention.sh
+│       ├── file_cache_size
+│       │   ├── file_cache_size.c
+│       │   └── logs/
+│       └── file_read_time
+│           ├── file_read_time.c
+│           ├── file_read_time_sizes.sh
+│           ├── logs/
+│           ├── remote_linux_file_create.sh
+│           └── remote_log/
+└── utils
+    ├── repeat_cmd.sh
+    └── utils.h
+```
 
 ## Build
 We used `Makefile` to specify experiment build dependencies and their rules for this project. So, use the following command from the top directory to generate all executables in created `build` folder.
@@ -126,6 +194,10 @@ make
         ```
     * **Remote file read time**
         <br>
+        Create fake files on remote disk using following command.
+        ```
+        ./build/remote_linux_file_create.sh
+        ```
         *Random Access*
         ```
         sudo ./build/file_read_time_sizes.sh ./build/file_read_time /locally/mounted/path/containing/temp/files
