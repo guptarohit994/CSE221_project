@@ -9,6 +9,7 @@
 #include <ctype.h>
 #include <sched.h>
 #include <assert.h>
+#include <stdint.h>
 #include <sys/resource.h>
 
 // defines from measurement_overhead
