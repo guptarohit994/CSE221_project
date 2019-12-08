@@ -10,6 +10,7 @@ Ben Zhou                      <br>
   * [Directory Structure](#directory-structure)
   * [Build](#build)
   * [Executing Experiments](#executing-experiments)
+  * [Running All Experiments](#running-all-experiments)
   * [Important Know-how for Mac](#important-know-how-for-mac)
 
 ## Directory Structure
@@ -229,7 +230,15 @@ make
         ```
         sudo ./build/file_contention.sh ./build/contention
         ```
-        
+## Running All Experiments
+
+```
+make
+sudo ./run_all.sh > run_all.log
+```
+Please note that it does not run any remote experiments since they require additional setup detailed above.
+
+
 ## Important Know-how for Mac
 
 **Increase the priority of a process**
