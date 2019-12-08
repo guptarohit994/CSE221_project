@@ -136,6 +136,7 @@ make
         ```
     * **RAM bandwidth**
         ```
+        sudo ./build/ram_bandwidth
         ```
     * **Page fault service time**
         ```

@@ -68,7 +68,7 @@ int main() {
 // bandwidth: GB/s = GB * cycles/s * 1/cycles
 #define t2b(t) (N_BYTES*1.0 / (1<<30) * 2.7e9 / (t))
 
-    printf("%.5f, %.5f\n", t2b(tr), t2b(tw));
+    printf("Read bandwidth: %.5f (GB/s); Write bandwidth: %.5f (GB/s)\n", t2b(tr), t2b(tw));
 
 #undef t2b
 }
