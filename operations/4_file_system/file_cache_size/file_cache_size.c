@@ -15,7 +15,6 @@
 //  2. block size makes a difference
 //  3. disable readahead
 
-
 #define NONNEG(msg, status) \
     ({ __typeof__ (status) _status = (status);  \
     if (_status < 0) handle_error_en(_status, (msg)); })
@@ -50,16 +49,12 @@ int main(int argc, char *argv[]){
 	NONNEG("fcntl_f_rdahead", fcntl(file_fd, F_RDAHEAD, 0));
 	NONNEG("fcntl_f_nocache", fcntl(file_fd, F_NOCACHE, 0));
 
-#ifdef _DEBUG
 	printf("Opened filename:%s for reading with fd:%d\n", filename, file_fd);
-#endif
 
 	/* determine the size of file */
 	uint64_t file_size = lseek(file_fd, 0L, SEEK_END);
 	NONNEG("fseek: SEEK_END", file_size);
-#ifdef _DEBUG
 	printf("Size of file is %lluB\n", file_size);
-#endif
 
 	printf("Block size is %lluB\n", BLOCK_SIZE);
 
@@ -71,10 +66,12 @@ int main(int argc, char *argv[]){
 		5560 * MB, 5640 * MB, 5720 * MB, 5800 * MB, 5880 * MB, 5960 * MB,
 		6*GB, 7*GB, 8*GB,
     };
+	assert( (file_size >> 30) >= 8);
 
 	uint64_t cycles_taken = 0;
 	char *buffer = (char *) malloc(BLOCK_SIZE);
 
+	printf("%s, %s, %s\n", "File Size(MB)", "Time(ms)", "Bandwidth (GB/s)");
 	for (int i=0; i < (sizeof(file_sizes_to_read)/sizeof(uint64_t)); ++i) {
 		uint64_t size_to_read = file_sizes_to_read[i];
 

@@ -128,12 +128,11 @@ connection_overhead_teardown: build
 
 ################### 4_file_system ###################
 
-build/temp_8GB_file: build
-	$(info ************ A fake large file temp_8GB_file will be created ************)
-	# mkfile -n 1g build/temp_8GB_file
-
 ## file cache size
-file_cache_size: build build/temp_8GB_file
+copy_file_cache_size_script: build
+	cp operations/4_file_system/file_cache_size/file_cache_size.sh build/file_cache_size.sh
+
+file_cache_size: build  copy_file_cache_size_script
 	$(call standard_compile_O3,4_file_system,file_cache_size)
 
 copy_file_read_script: build

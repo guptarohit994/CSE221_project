@@ -150,6 +150,11 @@ make
         ./utils/repeat_cmd.sh ./build/round_trip_time_remote 100
         ```
     * **Peak bandwidth**
+        First run the server with
+        ```
+        ./build/peak_bandwidth -s
+        ```
+        Then
         ```
         ./utils/repeat_cmd.sh build/peak_bandwidth 100
         ```
@@ -181,6 +186,7 @@ make
 4. File System
     * **Size of file cache**
         ```
+        sudo ./build/file_cache_size.sh ./build/file_cache_size
         ```
     * **File read time**
         <br>
