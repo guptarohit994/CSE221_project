@@ -139,12 +139,15 @@ file_cache_size: build build/temp_8GB_file
 copy_file_read_script: build
 	cp operations/4_file_system/file_read_time/file_read_time_sizes.sh build/file_read_time_sizes.sh
 
+copy_remote_fake_file_script: build
+	cp operations/4_file_system/file_read_time/remote_linux_file_create.sh build/remote_linux_file_create.sh
+
 ## file_read_time / remote_file_read_time
-file_read_time: build copy_file_read_script
+file_read_time: build copy_file_read_script copy_remote_fake_file_script
 	$(CC) $(OPTS) -o build/file_read_time operations/4_file_system/file_read_time/file_read_time.c
 
 ## file_read_time_seq / remote_file_read_time_seq
-file_read_time_seq: build copy_file_read_script
+file_read_time_seq: build copy_file_read_script copy_remote_fake_file_script
 	$(CC) $(OPTS) -D SEQUENTIAL_ACCESS -o build/file_read_time_seq operations/4_file_system/file_read_time/file_read_time.c
 
 ## file_read_time / remote_file_read_time no limits, read max possible blocks in a file
