@@ -1,4 +1,10 @@
-# CSE221_project
+# CSE221 Project : [System Measurement Project](http://cseweb.ucsd.edu/classes/fa19/cse221-a/project.html)
+
+------------------------------<br>
+Rohit Gupta                   <br>
+Kien Nguyen                   <br>
+Ben Zhou                      <br>
+------------------------------<br>
 
 ## Table of Contents
   * [Directory Structure](#directory-structure)
