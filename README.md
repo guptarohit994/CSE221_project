@@ -99,6 +99,9 @@ make
         sudo ./utils/repeat_cmd.sh ./build/measurement_overhead 100
         ```
     * **Procedure call overhead**
+        ```
+        sudo ./build/procedure_call
+        ```
     * **System call overhead**
         ```
         sudo ./utils/repeat_cmd.sh ./build/system_call 100
